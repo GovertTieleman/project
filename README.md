@@ -7,6 +7,8 @@ This app aims to make it easy for users to keep track of their daily nutrient in
 2. Input screen where the user can enter the type and amount of different foods that they consume.
 3. Plan screen, where the user can input their desired type of diet, which includes the macro nutrient ratio they would wish to stick to    as well as the amount of calories.
 
+![Alt text](/proposal.png?raw=true "Portrait")
+
 <b>Prerequisites</b>
 
 1. Data sources: the app will need access to a database with all foods and their respective nutrient content
