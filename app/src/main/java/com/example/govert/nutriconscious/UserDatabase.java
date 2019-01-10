@@ -14,8 +14,8 @@ public class UserDatabase extends SQLiteOpenHelper {
 
     // declare CREATE_TABLE_SQL query for user and food
     private static final String CREATE_TABLE_USER = "CREATE TABLE " + TABLE_NAME_USER + " (_id " +
-            "INTEGER PRIMARY KEY AUTOINCREMENT,gender TEXT,height TEXT," +
-            "weight INTEGER, activity TEXT, goal TEXT)";
+            "INTEGER PRIMARY KEY AUTOINCREMENT,gender TEXT,height INTEGER," +
+            "weight INTEGER, age INTEGER, activity TEXT, goal TEXT)";
 
 //    private static final String CREATE_TABLE_FOOD = "CREATE TABLE " + TABLE_NAME_FOOD + " (_id " +
 //            "INTEGER PRIMARY KEY AUTOINCREMENT,date TEXT,title TEXT," +
@@ -52,9 +52,9 @@ public class UserDatabase extends SQLiteOpenHelper {
         return instance;
     }
 
-    public Cursor selectALL() {
+    public Cursor selectUser() {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT _id, gender, height, weight, activity, goal FROM journal_entries",
+        return db.rawQuery("SELECT _id, gender, height, weight, age, activity, goal FROM user",
                 null);
     }
 
@@ -69,6 +69,7 @@ public class UserDatabase extends SQLiteOpenHelper {
         values.put("gender", user.getGender());
         values.put("height", user.getHeight());
         values.put("weight", user.getWeight());
+        values.put("age", user.getAge());
         values.put("activity", user.getActivity());
         values.put("goal", user.getGoal());
 
