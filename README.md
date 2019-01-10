@@ -13,7 +13,7 @@ These features comprise the minimum viable product:
 
 As an optional feature there may be a screen where the users can get recommendations for food types that their diet is lacking in.
 
-![Alt text](/proposal.png?raw=true "Portrait")
+![Alt text](/proposal1.png?raw=true "Portrait")
 
 <b>Prerequisites</b>
 
