@@ -14,7 +14,7 @@ Attributes: carbs, fat, protein, amount, vitamins
 Operations: calculate calories
 
 UserDatabase:
-user
+user,
 Food[] 
 
 makeUser
