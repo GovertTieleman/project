@@ -6,6 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/buttonInput"
+        android:text="Food diary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="inputClicked"
+app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/buttonPlan"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:gravity="center"/>
+
+    <Button
+        android:id="@+id/buttonPlan"
+        android:text="Diet plan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="planClicked"
+app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/buttonInput"
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/textViewCalories"
@@ -13,7 +34,7 @@
         android:layout_height="wrap_content"
         android:text="Calories: 1400/2500"
         android:textSize="24sp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonInput"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
