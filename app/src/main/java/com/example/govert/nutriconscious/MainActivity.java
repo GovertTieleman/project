@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    public void inputClicked(View view) {
-        startActivity(new Intent(MainActivity.this, InputActivity.class));
+    public void searchClicked(View view) {
+        startActivity(new Intent(MainActivity.this, SearchActivity.class));
     }
 
     public void planClicked(View view) {

@@ -8,10 +8,10 @@
 
     <Button
         android:id="@+id/buttonInput"
-        android:text="Food diary"
+        android:text="Search food"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="inputClicked"
+        android:onClick="searchClicked"
 app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="@id/buttonPlan"
         app:layout_constraintLeft_toLeftOf="parent"
