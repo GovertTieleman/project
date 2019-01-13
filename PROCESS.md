@@ -18,3 +18,6 @@ Managed to scrape text from USDA site by using an URL. Next step: make the datab
 
 # day 6
 Implemented food search functionality with a JSONrequest through the USDA food database api. The user can enter a search term and will get a list of foods that match. They can click on the food they want to select and see its nutrional details. The next step will be to show those details and allow the user to select how much of the food they are consuming. Then it will be saved to the database along with the date on which it was consumed in order to create the user's food diary.
+
+# day 7
+Implemented nutrient detail screen. The app now allows users to search and find any food item within the USDA database and see all its nutritional values. The next step will be to allow the user to enter how much of the food they have consumed, calculate the nutrients and add the food to the diary database.
