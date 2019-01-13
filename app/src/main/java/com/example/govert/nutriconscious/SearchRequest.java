@@ -62,7 +62,7 @@ public class SearchRequest implements Response.Listener<JSONObject>, Response.Er
 
                 // add db number
                 foodList.add(new FoodItem(currentItem.getString("name"),
-                        currentItem.getInt("ndbno"), 0, 0, 0, 0));
+                        currentItem.getString("ndbno"), null));
             }
 
             // perform Callback to activity

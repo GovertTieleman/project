@@ -49,7 +49,7 @@ public class SearchActivity extends AppCompatActivity implements SearchRequest.C
 
         // create url
         String url = "https://api.nal.usda.gov/ndb/search/?format=json&q=" + term +
-                "&sort=n&max=25&offset=0&api_key=yEpge2Dj4lDU3WIzP5n6vTNGxXZ8uUDJeOhlrVYm";
+                "&sort=r&max=25&offset=0&api_key=yEpge2Dj4lDU3WIzP5n6vTNGxXZ8uUDJeOhlrVYm";
 
         // request search
         SearchRequest x = new SearchRequest(this);

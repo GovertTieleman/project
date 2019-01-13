@@ -2,14 +2,21 @@ package com.example.govert.nutriconscious;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class DetailActivity extends AppCompatActivity implements DetailRequest.Callback {
-    private TextView name, KCal, protein, carb, fat;
+    private TextView name;
+    private EditText amount;
+    private Button add;
+    private ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,10 +25,9 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
 
         // get TextViews
         name = (TextView) findViewById(R.id.textViewName);
-        KCal = (TextView) findViewById(R.id.textViewKCal);
-        protein = (TextView) findViewById(R.id.textViewProtein);
-        carb = (TextView) findViewById(R.id.textViewCarb);
-        fat = (TextView) findViewById(R.id.textViewFat);
+        amount = (EditText) findViewById(R.id.editTextAmount);
+        add = (Button) findViewById(R.id.buttonAdd);
+        lv = (ListView) findViewById(R.id.listViewNutrients);
 
         // get foodItem
         FoodItem foodItem = (FoodItem) getIntent().getSerializableExtra("foodItem");
@@ -35,14 +41,19 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
         x.getDetails(this, url);
     }
 
+    public void addToDiary(View view) {
+    }
+
     @Override
     public void gotDetails(FoodItem food) {
-        // set TextViews to show nutrient profile
+        // set name
         name.setText(food.getName());
-        KCal.setText(String.format("Calories: %s", food.getKCal()));
-        protein.setText(String.format("Protein: %s", food.getProtein()));
-        carb.setText(String.format("Carbs: %s", food.getCarb()));
-        fat.setText(String.format("Fat: %s", food.getFat()));
+
+        // make adapter
+        NutrientAdapter adapter = new NutrientAdapter(this, 0, food.getNutrients());
+
+        // set adapter
+        lv.setAdapter(adapter);
     }
 
     @Override

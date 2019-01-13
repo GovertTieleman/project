@@ -1,23 +1,18 @@
 package com.example.govert.nutriconscious;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class FoodItem implements Serializable {
 
     private String name;
-    private int ndbno;
-    private double KCal;
-    private double protein;
-    private double carb;
-    private double fat;
+    private String ndbno;
+    private ArrayList<Nutrient> nutrients;
 
-    public FoodItem(String name, int ndbno, double KCal, double protein, double carb, double fat) {
+    public FoodItem(String name, String ndbno, ArrayList<Nutrient> nutrients) {
         this.name = name;
         this.ndbno = ndbno;
-        this.KCal = KCal;
-        this.protein = protein;
-        this.carb = carb;
-        this.fat = fat;
+        this.nutrients = nutrients;
     }
 
     public String getName() {
@@ -28,43 +23,19 @@ public class FoodItem implements Serializable {
         this.name = name;
     }
 
-    public int getNdbno() {
+    public String getNdbno() {
         return ndbno;
     }
 
-    public void setNdbno(int ndbno) {
+    public void setNdbno(String ndbno) {
         this.ndbno = ndbno;
     }
 
-    public double getKCal() {
-        return KCal;
+    public ArrayList<Nutrient> getNutrients() {
+        return nutrients;
     }
 
-    public void setKCal(double KCal) {
-        this.KCal = KCal;
-    }
-
-    public double getProtein() {
-        return protein;
-    }
-
-    public void setProtein(double protein) {
-        this.protein = protein;
-    }
-
-    public double getCarb() {
-        return carb;
-    }
-
-    public void setCarb(double carb) {
-        this.carb = carb;
-    }
-
-    public double getFat() {
-        return fat;
-    }
-
-    public void setFat(double fat) {
-        this.fat = fat;
+    public void setNutrients(ArrayList<Nutrient> nutrients) {
+        this.nutrients = nutrients;
     }
 }

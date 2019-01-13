@@ -8,52 +8,68 @@
 
     <TextView
         android:id="@+id/textViewName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:textSize="20sp"
+        android:layout_marginEnd="8dp"
+        android:textSize="24sp"
+        android:text="Cheddar cheese"
+        android:gravity="start"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
-        android:id="@+id/textViewKCal"
+        android:id="@+id/textViewAmount"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:textSize="20sp"
+        android:layout_marginBottom="8dp"
+        android:gravity="bottom"
+        android:text="Amount in grams:"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextAmount"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewName" />
 
-    <TextView
-        android:id="@+id/textViewProtein"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/editTextAmount"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewKCal" />
+        android:layout_marginEnd="8dp"
+        android:gravity="center_horizontal"
+        android:inputType="number"
+        android:textSize="16sp"
+        android:text="100"
+        app:layout_constraintEnd_toStartOf="@+id/buttonAdd"
+        app:layout_constraintStart_toEndOf="@+id/textViewAmount"
+        app:layout_constraintTop_toBottomOf="@+id/textViewName" />
 
-    <TextView
-        android:id="@+id/textViewCarb"
-        android:layout_width="wrap_content"
-        android:layout_height="26dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewProtein" />
-
-    <TextView
-        android:id="@+id/textViewFat"
+    <Button
+        android:id="@+id/buttonAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="Add to food diary"
+        android:onClick="addToDiary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewName" />
+
+    <ListView
+        android:id="@+id/listViewNutrients"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:textSize="20sp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCarb" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextAmount" />
 
 </android.support.constraint.ConstraintLayout>
