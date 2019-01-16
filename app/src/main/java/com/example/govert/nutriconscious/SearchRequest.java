@@ -53,16 +53,30 @@ public class SearchRequest implements Response.Listener<JSONObject>, Response.Er
             ArrayList<FoodItem> foodList = new ArrayList<>();
 
             // get the JSONArray with food items
-            JSONArray items = response.getJSONObject("list").getJSONArray("item");
+            JSONArray items = response.getJSONArray("hits");
 
             // iterate over items, adding their db number to the ArrayList
             for (int i = 0; i < items.length(); i++) {
                 // get current Object
-                JSONObject currentItem = items.getJSONObject(i);
+                JSONObject currentItem = items.getJSONObject(i).getJSONObject("fields");
 
-                // add db number
-                foodList.add(new FoodItem(currentItem.getString("name"),
-                        currentItem.getString("ndbno"), null));
+                // get serving weight in grams, if available
+                Double servingWeightGrams;
+                try {
+                    servingWeightGrams = currentItem.getDouble("nf_serving_weight_grams");
+                }
+                catch (JSONException e) {
+                    servingWeightGrams = 0.0;
+                    e.printStackTrace();
+                }
+
+                // get properties for all items
+                foodList.add(new FoodItem(currentItem.getString("item_name"),
+                        currentItem.getString("item_id"),
+                        currentItem.getDouble("nf_calories"),
+                        null, currentItem.getInt("nf_serving_size_qty"),
+                        currentItem.getString("nf_serving_size_unit"),
+                        servingWeightGrams));
             }
 
             // perform Callback to activity

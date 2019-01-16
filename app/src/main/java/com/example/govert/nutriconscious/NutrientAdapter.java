@@ -36,7 +36,7 @@ public class NutrientAdapter extends ArrayAdapter<Nutrient> {
         name.setText(currentNutrient.getName());
 
         TextView value = (TextView) listItem.findViewById(R.id.textViewNutrientValue);
-        value.setText(currentNutrient.getValue().toString());
+        value.setText(currentNutrient.getValue());
 
         TextView unit = (TextView) listItem.findViewById(R.id.textViewNutrientUnit);
         unit.setText(currentNutrient.getUnit());

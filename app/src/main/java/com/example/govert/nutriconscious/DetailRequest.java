@@ -20,7 +20,7 @@ public class DetailRequest implements Response.Listener<JSONObject>, Response.Er
     private Callback activity;
 
     public interface Callback {
-        void gotDetails(FoodItem foodItem);
+        void gotDetails(ArrayList<Nutrient> nutrients);
         void gotDetailsError(String message);
     }
 
@@ -50,29 +50,14 @@ public class DetailRequest implements Response.Listener<JSONObject>, Response.Er
     public void onResponse(JSONObject response) {
         // get JSONArray
         try {
-            // get the JSONArray with food items
-            JSONObject foodJSON = response.getJSONArray("foods").getJSONObject(0)
-                    .getJSONObject("food");
-
-            JSONArray nutrientsJSON = foodJSON.getJSONArray("nutrients");
-
-            // get food name and ndbno, initialize ArrayList for nutrients
-            String name = foodJSON.getJSONObject("desc").getString("name");
-            String ndbno = foodJSON.getJSONObject("desc").getString("ndbno");
+            // create ArrayList of nutrients
             ArrayList<Nutrient> nutrients = new ArrayList<Nutrient>();
 
-            // iterate over JSONArray of nutrients, adding them to our list
-            for (int i = 0; i < nutrientsJSON.length(); i++) {
-                // get current Object
-                JSONObject currentNutrient = nutrientsJSON.getJSONObject(i);
-
-                nutrients.add(new Nutrient(currentNutrient.getString("name"),
-                        currentNutrient.getString("unit"),
-                        currentNutrient.getString("value")));
-            }
+            // add the relevant nutrients to the list
+            response.getString("fat");
 
             // perform Callback to activity
-            activity.gotDetails(new FoodItem(name, ndbno, nutrients));
+            activity.gotDetails(nutrients);
         }
         catch (JSONException e) {
             e.printStackTrace();

@@ -6,13 +6,21 @@ import java.util.ArrayList;
 public class FoodItem implements Serializable {
 
     private String name;
-    private String ndbno;
+    private String id;
+    private double calories;
     private ArrayList<Nutrient> nutrients;
+    private int servingQTY;
+    private String servingSize;
+    private double servingWeight;
 
-    public FoodItem(String name, String ndbno, ArrayList<Nutrient> nutrients) {
+    public FoodItem(String name, String id, double calories, ArrayList<Nutrient> nutrients, int servingQTY, String servingSize, double servingWeight) {
         this.name = name;
-        this.ndbno = ndbno;
+        this.id = id;
+        this.calories = calories;
         this.nutrients = nutrients;
+        this.servingQTY = servingQTY;
+        this.servingSize = servingSize;
+        this.servingWeight = servingWeight;
     }
 
     public String getName() {
@@ -23,12 +31,20 @@ public class FoodItem implements Serializable {
         this.name = name;
     }
 
-    public String getNdbno() {
-        return ndbno;
+    public String getId() {
+        return id;
     }
 
-    public void setNdbno(String ndbno) {
-        this.ndbno = ndbno;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public double getCalories() {
+        return calories;
+    }
+
+    public void setCalories(double calories) {
+        this.calories = calories;
     }
 
     public ArrayList<Nutrient> getNutrients() {
@@ -37,5 +53,29 @@ public class FoodItem implements Serializable {
 
     public void setNutrients(ArrayList<Nutrient> nutrients) {
         this.nutrients = nutrients;
+    }
+
+    public int getServingQTY() {
+        return servingQTY;
+    }
+
+    public void setServingQTY(int servingQTY) {
+        this.servingQTY = servingQTY;
+    }
+
+    public String getServingSize() {
+        return servingSize;
+    }
+
+    public void setServingSize(String servingSize) {
+        this.servingSize = servingSize;
+    }
+
+    public double getServingWeight() {
+        return servingWeight;
+    }
+
+    public void setServingWeight(double servingWeight) {
+        this.servingWeight = servingWeight;
     }
 }

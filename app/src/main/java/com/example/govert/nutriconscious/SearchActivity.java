@@ -48,8 +48,10 @@ public class SearchActivity extends AppCompatActivity implements SearchRequest.C
         String term = tv.getText().toString();
 
         // create url
-        String url = "https://api.nal.usda.gov/ndb/search/?format=json&q=" + term +
-                "&sort=r&max=25&offset=0&api_key=yEpge2Dj4lDU3WIzP5n6vTNGxXZ8uUDJeOhlrVYm";
+        String url = "https://api.nutritionix.com/v1_1/search/" + term + "?results=0%3A25" +
+                "&cal_min=0&cal_max=50000&fields=item_name,item_id,nf_calories," +
+                "nf_serving_size_qty,nf_serving_size_unit,nf_serving_weight_grams" +
+                "&appId=3f320916&appKey=fc58ccfd02cc5e1d32acce42ecee8bf6";
 
         // request search
         SearchRequest x = new SearchRequest(this);
@@ -62,14 +64,8 @@ public class SearchActivity extends AppCompatActivity implements SearchRequest.C
         foodsFound = foods;
         ArrayList<String> foodNames = new ArrayList<String>();
 
-        // iterate over foods to get their names
-        for (int i = 0; i < foods.size(); i++) {
-            foodNames.add(foods.get(i).getName());
-        }
-
         // make adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, foodNames);
+        SearchAdapter adapter = new SearchAdapter(this, 0, foodsFound);
 
         // set adapter
         lv.setAdapter(adapter);
