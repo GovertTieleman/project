@@ -1,12 +1,11 @@
 package com.example.govert.nutriconscious;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,7 +16,7 @@ import java.util.Locale;
 
 public class DetailActivity extends AppCompatActivity implements DetailRequest.Callback {
     private EditText numberEdit;
-    private Button add;
+    private FloatingActionButton add;
     private FoodItem detailedFood;
     private FoodItemSimple selectedFood;
     private ListView lv;
@@ -36,7 +35,7 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
         numberOfServings = selectedFood.getServingQTY();
 
         // get button, listView and numberEdit
-        add = (Button) findViewById(R.id.buttonAdd);
+        add = (FloatingActionButton) findViewById(R.id.buttonAdd);
         lv = (ListView) findViewById(R.id.listViewNutrients);
         numberEdit = (EditText) findViewById(R.id.editTextAmount);
 
