@@ -5,19 +5,28 @@ import java.util.ArrayList;
 
 public class FoodItem implements Serializable {
 
+    // name and ID of FoodItem
     private String name;
-    private String id;
-    private double calories;
-    private ArrayList<Nutrient> nutrients;
-    private int servingQTY;
-    private String servingSize;
-    private double servingWeight;
+    private int id;
 
-    public FoodItem(String name, String id, double calories, ArrayList<Nutrient> nutrients, int servingQTY, String servingSize, double servingWeight) {
+    // nutritional properties per serving
+    private Float calories;
+    private Float protein;
+    private Float carbohydrate;
+    private Float fat;
+
+    // number of servings, etc
+    private Float servingQTY;
+    private String servingSize;
+    private Float servingWeight;
+
+    public FoodItem(String name, int id, Float calories, Float protein, Float carbohydrate, Float fat, Float servingQTY, String servingSize, Float servingWeight) {
         this.name = name;
         this.id = id;
         this.calories = calories;
-        this.nutrients = nutrients;
+        this.protein = protein;
+        this.carbohydrate = carbohydrate;
+        this.fat = fat;
         this.servingQTY = servingQTY;
         this.servingSize = servingSize;
         this.servingWeight = servingWeight;
@@ -31,35 +40,51 @@ public class FoodItem implements Serializable {
         this.name = name;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public double getCalories() {
+    public Float getCalories() {
         return calories;
     }
 
-    public void setCalories(double calories) {
+    public void setCalories(Float calories) {
         this.calories = calories;
     }
 
-    public ArrayList<Nutrient> getNutrients() {
-        return nutrients;
+    public Float getProtein() {
+        return protein;
     }
 
-    public void setNutrients(ArrayList<Nutrient> nutrients) {
-        this.nutrients = nutrients;
+    public void setProtein(Float protein) {
+        this.protein = protein;
     }
 
-    public int getServingQTY() {
+    public Float getCarbohydrate() {
+        return carbohydrate;
+    }
+
+    public void setCarbohydrate(Float carbohydrate) {
+        this.carbohydrate = carbohydrate;
+    }
+
+    public Float getFat() {
+        return fat;
+    }
+
+    public void setFat(Float fat) {
+        this.fat = fat;
+    }
+
+    public Float getServingQTY() {
         return servingQTY;
     }
 
-    public void setServingQTY(int servingQTY) {
+    public void setServingQTY(Float servingQTY) {
         this.servingQTY = servingQTY;
     }
 
@@ -71,11 +96,11 @@ public class FoodItem implements Serializable {
         this.servingSize = servingSize;
     }
 
-    public double getServingWeight() {
+    public Float getServingWeight() {
         return servingWeight;
     }
 
-    public void setServingWeight(double servingWeight) {
+    public void setServingWeight(Float servingWeight) {
         this.servingWeight = servingWeight;
     }
 }

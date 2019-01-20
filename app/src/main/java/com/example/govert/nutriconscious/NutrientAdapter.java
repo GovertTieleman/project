@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class NutrientAdapter extends ArrayAdapter<Nutrient> {
     private ArrayList<Nutrient> nutrientList;
@@ -36,7 +37,7 @@ public class NutrientAdapter extends ArrayAdapter<Nutrient> {
         name.setText(currentNutrient.getName());
 
         TextView value = (TextView) listItem.findViewById(R.id.textViewNutrientValue);
-        value.setText(currentNutrient.getValue());
+        value.setText(String.format(Locale.getDefault(),"%.2f", currentNutrient.getValue()));
 
         TextView unit = (TextView) listItem.findViewById(R.id.textViewNutrientUnit);
         unit.setText(currentNutrient.getUnit());

@@ -62,10 +62,10 @@ public class PlanActivity extends AppCompatActivity implements AdapterView.OnIte
         User user = new User(null, gender, height, weight, age, activity, goal);
 
         // get db
-        UserDatabase db = UserDatabase.getInstance(this.getApplicationContext());
+        DataBaseHelper db = DataBaseHelper.getInstance(this.getApplicationContext());
 
         // insert into db
-        db.insert(user);
+        db.insertUser(user);
 
         // go back to MainActivity
         finish();

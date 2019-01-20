@@ -6,9 +6,9 @@ public class Nutrient implements Serializable {
 
     private String name;
     private String unit;
-    private String value;       // per 100g
+    private Float value;
 
-    public Nutrient(String name, String unit, String value) {
+    public Nutrient(String name, String unit, Float value) {
         this.name = name;
         this.unit = unit;
         this.value = value;
@@ -30,11 +30,11 @@ public class Nutrient implements Serializable {
         this.unit = unit;
     }
 
-    public String getValue() {
+    public Float getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Float value) {
         this.value = value;
     }
 }

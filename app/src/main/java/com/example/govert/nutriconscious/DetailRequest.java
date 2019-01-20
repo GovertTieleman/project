@@ -13,14 +13,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class DetailRequest implements Response.Listener<JSONObject>, Response.ErrorListener {
     private Context context;
     private Callback activity;
+    private FoodItemSimple selectedFood;
 
     public interface Callback {
-        void gotDetails(ArrayList<Nutrient> nutrients);
+        void gotDetails(FoodItem foodItem);
         void gotDetailsError(String message);
     }
 
@@ -28,9 +30,12 @@ public class DetailRequest implements Response.Listener<JSONObject>, Response.Er
         this.context = context;
     }
 
-    public void getDetails(Callback activity, String url) {
+    public void getDetails(Callback activity, String url, FoodItemSimple foodItemSimple) {
         // set activity
         this.activity = activity;
+
+        // get selectedFood
+        selectedFood = foodItemSimple;
 
         // create RequestQueue
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -48,20 +53,56 @@ public class DetailRequest implements Response.Listener<JSONObject>, Response.Er
 
     @Override
     public void onResponse(JSONObject response) {
-        // get JSONArray
+        // get nutrient info
+        Float protein;
         try {
-            // create ArrayList of nutrients
-            ArrayList<Nutrient> nutrients = new ArrayList<Nutrient>();
-
-            // add the relevant nutrients to the list
-            response.getString("fat");
-
-            // perform Callback to activity
-            activity.gotDetails(nutrients);
+            protein = BigDecimal.valueOf(response.getDouble("nf_protein")).floatValue();
         }
         catch (JSONException e) {
-            e.printStackTrace();
+            protein = 0f;
         }
+
+        Float carbohydrate;
+        try {
+            carbohydrate = BigDecimal.valueOf(response.getDouble(
+                    "nf_total_carbohydrate")).floatValue();
+        }
+        catch (JSONException e) {
+            carbohydrate = 0f;
+        }
+
+        Float fat;
+        try {
+            fat = BigDecimal.valueOf(response.getDouble("nf_total_fat")).floatValue();
+        }
+        catch (JSONException e) {
+            fat = 0f;
+        }
+
+        Float servingWeightGrams;
+        try {
+            servingWeightGrams = BigDecimal.valueOf(response.getDouble(
+                    "nf_serving_weight_grams")).floatValue();
+        }
+        catch (JSONException e) {
+            servingWeightGrams = 0f;
+        }
+
+        // calculate nutrients per serving
+        Float servings = selectedFood.getServingQTY();
+
+        Float calories = (selectedFood.getCalories() / servings);
+        protein = (protein / servings);
+        carbohydrate = (carbohydrate / servings);
+        fat = (fat / servings);
+
+        // create FoodItem
+        FoodItem foodItem = new FoodItem(selectedFood.getName(), 0, calories,
+                protein, carbohydrate, fat, selectedFood.getServingQTY(),
+                selectedFood.getServingSize(), servingWeightGrams);
+
+        // perform Callback to activity
+        activity.gotDetails(foodItem);
     }
 }
 

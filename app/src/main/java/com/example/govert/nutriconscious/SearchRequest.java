@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class SearchRequest implements Response.Listener<JSONObject>, Response.ErrorListener {
@@ -19,7 +20,7 @@ public class SearchRequest implements Response.Listener<JSONObject>, Response.Er
     private Callback activity;
 
     public interface Callback {
-        void gotFoods(ArrayList<FoodItem> categories);
+        void gotFoods(ArrayList<FoodItemSimple> categories);
         void gotFoodsError(String message);
     }
 
@@ -50,7 +51,7 @@ public class SearchRequest implements Response.Listener<JSONObject>, Response.Er
         // get JSONArray
         try {
             // initialize ArrayList
-            ArrayList<FoodItem> foodList = new ArrayList<>();
+            ArrayList<FoodItemSimple> foodList = new ArrayList<>();
 
             // get the JSONArray with food items
             JSONArray items = response.getJSONArray("hits");
@@ -60,23 +61,13 @@ public class SearchRequest implements Response.Listener<JSONObject>, Response.Er
                 // get current Object
                 JSONObject currentItem = items.getJSONObject(i).getJSONObject("fields");
 
-                // get serving weight in grams, if available
-                Double servingWeightGrams;
-                try {
-                    servingWeightGrams = currentItem.getDouble("nf_serving_weight_grams");
-                }
-                catch (JSONException e) {
-                    servingWeightGrams = 0.0;
-                    e.printStackTrace();
-                }
-
                 // get properties for all items
-                foodList.add(new FoodItem(currentItem.getString("item_name"),
+                foodList.add(new FoodItemSimple(currentItem.getString("item_name"),
                         currentItem.getString("item_id"),
-                        currentItem.getDouble("nf_calories"),
-                        null, currentItem.getInt("nf_serving_size_qty"),
-                        currentItem.getString("nf_serving_size_unit"),
-                        servingWeightGrams));
+                        BigDecimal.valueOf(currentItem.getDouble("nf_calories"))
+                                .floatValue(), BigDecimal.valueOf(currentItem.getDouble(
+                                        "nf_serving_size_qty")).floatValue(),
+                        currentItem.getString("nf_serving_size_unit")));
             }
 
             // perform Callback to activity

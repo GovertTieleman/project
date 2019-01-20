@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class SearchActivity extends AppCompatActivity implements SearchRequest.Callback {
     private ListView lv;
     private TextView tv;
-    private ArrayList<FoodItem> foodsFound;
+    private ArrayList<FoodItemSimple> foodsFound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +32,11 @@ public class SearchActivity extends AppCompatActivity implements SearchRequest.C
     private class ListItemClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            FoodItem foodItem = foodsFound.get(position);
+            FoodItemSimple foodSelected = foodsFound.get(position);
 
             // make intent
             Intent intent = new Intent(SearchActivity.this, DetailActivity.class);
-            intent.putExtra("foodItem", foodItem);
+            intent.putExtra("foodItem", foodSelected);
 
             // start MenuActivity with intent
             startActivity(intent);
@@ -50,7 +50,7 @@ public class SearchActivity extends AppCompatActivity implements SearchRequest.C
         // create url
         String url = "https://api.nutritionix.com/v1_1/search/" + term + "?results=0%3A25" +
                 "&cal_min=0&cal_max=50000&fields=item_name,item_id,nf_calories," +
-                "nf_serving_size_qty,nf_serving_size_unit,nf_serving_weight_grams" +
+                "nf_serving_size_qty,nf_serving_size_unit" +
                 "&appId=3f320916&appKey=fc58ccfd02cc5e1d32acce42ecee8bf6";
 
         // request search
@@ -59,10 +59,9 @@ public class SearchActivity extends AppCompatActivity implements SearchRequest.C
     }
 
     @Override
-    public void gotFoods(ArrayList<FoodItem> foods) {
+    public void gotFoods(ArrayList<FoodItemSimple> foods) {
         // save ArrayList of foods that were found
         foodsFound = foods;
-        ArrayList<String> foodNames = new ArrayList<String>();
 
         // make adapter
         SearchAdapter adapter = new SearchAdapter(this, 0, foodsFound);
