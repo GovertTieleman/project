@@ -21,3 +21,6 @@ Implemented food search functionality with a JSONrequest through the USDA food d
 
 # day 7
 Implemented nutrient detail screen. The app now allows users to search and find any food item within the USDA database and see all its nutritional values. The next step will be to allow the user to enter how much of the food they have consumed, calculate the nutrients and add the food to the diary database.
+
+# day 8
+Switched to new (better API), Nutritionix. Improved layout and functionality of the food search and detail pages. Next step will be to create the nutrient list for the food details and put the foods into the database.
