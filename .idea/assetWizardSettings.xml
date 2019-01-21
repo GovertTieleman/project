@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_profile" />
-                            <entry key="sourceFile" value="C:\Users\Ert\Desktop\Programmeerproject\Icons\profile.svg" />
+                            <entry key="outputName" value="ic_add" />
+                            <entry key="sourceFile" value="C:\Users\Ert\Desktop\Programmeerproject\Icons\add.svg" />
                           </map>
                         </option>
                       </PersistentState>

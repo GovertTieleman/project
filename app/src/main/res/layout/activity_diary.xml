@@ -4,38 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".DiaryActivity">
 
     <TextView
-        android:id="@+id/textViewCalories"
+        android:id="@+id/dayOrMonth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Calories: 1400/2500"
         android:layout_margin="16dp"
+        android:text="Today"
         android:textSize="24sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <ProgressBar
-        android:id="@+id/progressBarCalories"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:max="2500"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewCalories"/>
-
-    <TextView
-        android:id="@+id/textViewMacros"
+    <ImageButton
+        android:id="@+id/imageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Macro nutrients:"
-        android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@id/progressBarCalories"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        android:layout_margin="20dp"
+        app:srcCompat="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/white"/>
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:srcCompat="@drawable/ic_forward"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/white" />
+
+    <TextView
+        android:id="@+id/caloriesLeft"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Calories left: 2000 - 1200 = 800"
+        android:gravity="center"
+        android:layout_margin="16dp"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dayOrMonth"/>
+
+    <ListView
+        android:id="@+id/diaryList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/caloriesLeft" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"

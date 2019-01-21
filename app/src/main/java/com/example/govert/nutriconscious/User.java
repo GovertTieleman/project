@@ -1,5 +1,7 @@
 package com.example.govert.nutriconscious;
 
+import android.database.Cursor;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
@@ -111,5 +113,22 @@ public class User implements Serializable {
 
     public void setGoal(String goal) {
         this.goal = goal;
+    }
+
+    public static User getUser(Cursor cursor) {
+        User user;
+        if (cursor.moveToFirst()) {
+            String gender = cursor.getString(cursor.getColumnIndex("gender"));
+            int height = cursor.getInt(cursor.getColumnIndex("height"));
+            int weight = cursor.getInt(cursor.getColumnIndex("weight"));
+            int age = cursor.getInt(cursor.getColumnIndex("age"));
+            String activity = cursor.getString(cursor.getColumnIndex("activity"));
+            String goal = cursor.getString(cursor.getColumnIndex("goal"));
+            user = new User(null, gender, height, weight, age, activity, goal);
+
+            return user;
+        }
+
+        return null;
     }
 }

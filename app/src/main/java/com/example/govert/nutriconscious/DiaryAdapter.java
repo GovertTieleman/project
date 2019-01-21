@@ -8,12 +8,11 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
-public class SearchAdapter extends ArrayAdapter<FoodItemSimple> {
-    private ArrayList<FoodItemSimple> foodItems;
+public class DiaryAdapter extends ArrayAdapter<FoodItem> {
+    private ArrayList<FoodItem> foodItems;
 
-    public SearchAdapter(Context context, int resource, ArrayList<FoodItemSimple> results) {
+    public DiaryAdapter(Context context, int resource, ArrayList<FoodItem> results) {
         super(context, resource, results);
         foodItems = results;
     }
@@ -29,19 +28,17 @@ public class SearchAdapter extends ArrayAdapter<FoodItemSimple> {
         }
 
         // get current FoodItemSimple
-        FoodItemSimple currentFoodItem = foodItems.get(position);
+        FoodItem currentFoodItem = foodItems.get(position);
 
         // set name, amount and unit for Nutrient
         TextView itemName = (TextView) listItem.findViewById(R.id.textViewItemName);
         itemName.setText(currentFoodItem.getName());
 
         TextView serving = (TextView) listItem.findViewById(R.id.textViewServing);
-        serving.setText(String.format(Locale.getDefault(), "%.0f %s",
-                currentFoodItem.getServingQTY(), currentFoodItem.getServingSize()));
+        serving.setText(String.format("%s %s", currentFoodItem.getServingQTY().toString(), currentFoodItem.getServingSize()));
 
         TextView KCal = (TextView) listItem.findViewById(R.id.textViewKCal);
-        KCal.setText(String.format(Locale.getDefault(),
-                "%.0f KCal", currentFoodItem.getCalories()));
+        KCal.setText(String.format("%s KCal", currentFoodItem.getCalories().toString()));
 
         return listItem;
     }

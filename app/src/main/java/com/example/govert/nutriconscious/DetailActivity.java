@@ -65,7 +65,7 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
         servingSize.setText(String.format("1 %s", selectedFood.getServingSize()));
 
         // set numberOfServings
-        numberEdit.setText(String.format("%s", numberOfServings.toString()));
+        numberEdit.setText(String.format(Locale.getDefault(), "%.0f", numberOfServings));
 
         // set calories per serving
         String calories = String.format(Locale.getDefault(), "%.2f",

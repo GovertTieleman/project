@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = db.selectUser();
 
         // make instance of user class using cursor
-        if (!getUser(cursor)) {
+        if (!checkForUser(cursor)) {
             startActivity(new Intent(MainActivity.this, PlanActivity.class));
         }
 
@@ -31,18 +31,11 @@ public class MainActivity extends AppCompatActivity {
         caloriesTextView.setText(caloriesString);
     }
 
-    public boolean getUser(Cursor cursor) {
+    public boolean checkForUser(Cursor cursor) {
         // check if user exists and make instance of user class if it does
         if (cursor.moveToFirst()) {
-            String gender = cursor.getString(cursor.getColumnIndex("gender"));
-            int height = cursor.getInt(cursor.getColumnIndex("height"));
-            int weight = cursor.getInt(cursor.getColumnIndex("weight"));
-            int age = cursor.getInt(cursor.getColumnIndex("age"));
-            String activity = cursor.getString(cursor.getColumnIndex("activity"));
-            String goal = cursor.getString(cursor.getColumnIndex("goal"));
-
-            user = new User(null, gender, height, weight, age, activity, goal);
-
+            // set user
+            user = User.getUser(cursor);
             return true;
         }
 
@@ -56,5 +49,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void planClicked(View view) {
         startActivity(new Intent(MainActivity.this, PlanActivity.class));
+    }
+
+    public void diaryClicked(View view) {
+        startActivity(new Intent(MainActivity.this, DiaryActivity.class));
+    }
+
+    public void homeClicked(View view) {
+        startActivity(new Intent(MainActivity.this, MainActivity.class));
+    }
+
+    public void profileClicked(View view) {
+        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
     }
 }

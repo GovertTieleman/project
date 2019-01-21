@@ -16,7 +16,7 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 
     // declare CREATE_TABLE_SQL query for food
     private static final String CREATE_TABLE_FOOD = "CREATE TABLE " + TABLE_NAME_FOOD +
-            " (_id INTEGER PRIMARY KEY AUTOINCREMENT, item_name TEXT, date DATE, calories FLOAT, protein FLOAT, " +
+            " (_id INTEGER PRIMARY KEY AUTOINCREMENT, item_name TEXT, date TEXT, calories FLOAT, protein FLOAT, " +
             "carbohydrate FLOAT, fat FLOAT, serving_quantity FLOAT, serving_size TEXT, " +
             "serving_weight FLOAT)";
 
@@ -51,12 +51,9 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
         return instance;
     }
 
-    public Cursor selectFood(List dates) {
+    public Cursor selectFoodsByDate(String date) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT WHERE date IN " + dates + "_id, item_name, calories, " +
-                        "protein, carbohydrate, fat, serving_quantity, serving_size, " +
-                        "serving_weight FROM food",
-                null);
+        return db.rawQuery("SELECT * FROM food", null);
     }
 
     public void insertFood(FoodItem foodItem) {

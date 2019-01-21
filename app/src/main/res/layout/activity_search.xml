@@ -6,43 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".SearchActivity">
 
-    <SearchView
+    <EditText
         android:id="@+id/searchView"
-        android:clickable="true"
-
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:queryHint="Search food database"
+        android:hint="Find your food"
         android:textSize="20sp"
         android:inputType="text"
-        android:gravity="center"
-        android:background="#eeeeee"
-        app:layout_constraintBottom_toTopOf="@+id/listView"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="start|center"
+        android:background="@color/greyLight"
+        app:layout_constraintBottom_toTopOf="@+id/results"
+        app:layout_constraintEnd_toStartOf="@+id/button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--<EditText-->
-        <!--android:id="@+id/textView"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:layout_marginEnd="8dp"-->
-        <!--android:layout_marginBottom="8dp"-->
-        <!--android:hint="Search food database"-->
-        <!--android:textSize="20sp"-->
-        <!--android:inputType="text"-->
-        <!--android:gravity="center"-->
-        <!--android:background="#c7c7c7"-->
-        <!--app:layout_constraintBottom_toTopOf="@+id/listView"-->
-        <!--app:layout_constraintEnd_toStartOf="@+id/button"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent" />-->
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Search"
+        android:onClick="searchClicked"
+        android:backgroundTint="@color/backgroundDefault"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/results"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Results"
+        android:layout_marginStart="20dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button" />
 
     <ListView
         android:id="@+id/listView"
@@ -54,6 +57,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchView" />
+        app:layout_constraintTop_toBottomOf="@id/results" />
 
 </android.support.constraint.ConstraintLayout>
