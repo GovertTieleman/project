@@ -92,7 +92,7 @@
         android:layout_margin="16dp"
         android:gravity="center_horizontal"
         android:text="Nutrient information"
-        android:background="#eeeeee"
+        android:background="@color/greyLight"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
