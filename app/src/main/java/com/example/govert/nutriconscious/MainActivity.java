@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    private DataBaseHelper db;
+    private UserDataBaseHelper db;
     private User user;
 
     @Override
@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // get cursor
-        db = DataBaseHelper.getInstance(this);
+        db = UserDataBaseHelper.getInstance(this);
         Cursor cursor = db.selectUser();
 
         // make instance of user class using cursor

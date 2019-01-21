@@ -1,5 +1,6 @@
 package com.example.govert.nutriconscious;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Locale;
+
+import static com.example.govert.nutriconscious.FoodItem.makeDate;
 
 public class DetailActivity extends AppCompatActivity implements DetailRequest.Callback {
     private EditText numberEdit;
@@ -110,6 +113,19 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
     }
 
     public void addToDiary(View view) {
+        // get date and set date
+        String date = makeDate();
+        detailedFood.setDate(date);
+
+        // get db
+        FoodDatabaseHelper db = FoodDatabaseHelper.getInstance(this.getApplicationContext());
+
+        // insert food
+        db.insertFood(detailedFood);
+
+        // return to main
+        finish();
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     @Override

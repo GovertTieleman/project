@@ -1,13 +1,21 @@
 package com.example.govert.nutriconscious;
 
+import android.util.Log;
+
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class FoodItem implements Serializable {
 
     // name and ID of FoodItem
     private String name;
     private int id;
+    private String date;
 
     // nutritional properties per serving
     private Float calories;
@@ -20,9 +28,10 @@ public class FoodItem implements Serializable {
     private String servingSize;
     private Float servingWeight;
 
-    public FoodItem(String name, int id, Float calories, Float protein, Float carbohydrate, Float fat, Float servingQTY, String servingSize, Float servingWeight) {
+    public FoodItem(String name, int id, String date, Float calories, Float protein, Float carbohydrate, Float fat, Float servingQTY, String servingSize, Float servingWeight) {
         this.name = name;
         this.id = id;
+        this.date = date;
         this.calories = calories;
         this.protein = protein;
         this.carbohydrate = carbohydrate;
@@ -46,6 +55,14 @@ public class FoodItem implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public Float getCalories() {
@@ -102,5 +119,18 @@ public class FoodItem implements Serializable {
 
     public void setServingWeight(Float servingWeight) {
         this.servingWeight = servingWeight;
+    }
+
+    public static String makeDate() {
+        // create DateFormat
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+
+        // get Date
+        Calendar calendar = Calendar.getInstance();
+        String date = df.format(Calendar.getInstance(Locale.getDefault()).getTime());
+
+        Log.d("the current date is: ", date);
+
+        return date;
     }
 }

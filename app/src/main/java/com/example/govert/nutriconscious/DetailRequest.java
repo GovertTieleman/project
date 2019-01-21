@@ -97,7 +97,7 @@ public class DetailRequest implements Response.Listener<JSONObject>, Response.Er
         fat = (fat / servings);
 
         // create FoodItem
-        FoodItem foodItem = new FoodItem(selectedFood.getName(), 0, calories,
+        FoodItem foodItem = new FoodItem(selectedFood.getName(), 0, null, calories,
                 protein, carbohydrate, fat, selectedFood.getServingQTY(),
                 selectedFood.getServingSize(), servingWeightGrams);
 

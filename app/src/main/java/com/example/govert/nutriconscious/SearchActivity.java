@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity implements SearchRequest.Callback {
     private ListView lv;
-    private TextView tv;
+    private SearchView sv;
     private ArrayList<FoodItemSimple> foodsFound;
 
     @Override
@@ -23,7 +24,7 @@ public class SearchActivity extends AppCompatActivity implements SearchRequest.C
         setContentView(R.layout.activity_search);
         // get ListView and TextView
         lv = (ListView) findViewById(R.id.listView);
-        tv = (TextView) findViewById(R.id.textView);
+        sv = (SearchView) findViewById(R.id.searchView);
 
         // set listener
         lv.setOnItemClickListener(new ListItemClickListener());
@@ -45,7 +46,7 @@ public class SearchActivity extends AppCompatActivity implements SearchRequest.C
 
     public void searchClicked(View view) {
         // get search term
-        String term = tv.getText().toString();
+        String term = sv.getQuery().toString();
 
         // create url
         String url = "https://api.nutritionix.com/v1_1/search/" + term + "?results=0%3A25" +
