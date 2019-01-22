@@ -62,8 +62,6 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
         // get db
         SQLiteDatabase db = this.getWritableDatabase();
 
-        Log.d("updateFood called", foodItem.getServingQTY().toString());
-
         // declare values
         ContentValues values = new ContentValues();
 

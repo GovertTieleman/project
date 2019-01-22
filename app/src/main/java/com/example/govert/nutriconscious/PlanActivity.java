@@ -20,7 +20,7 @@ public class PlanActivity extends AppCompatActivity implements AdapterView.OnIte
 
         // get spinner options
         String[] activityLevels = new String[]{"sedentary", "normal", "active"};
-        String[] goals = new String[]{"loss", "maintain", "gain"};
+        String[] goals = new String[]{"lose", "maintain", "gain"};
 
         // make activity level spinner
         Spinner spinnerActivity = (Spinner) findViewById(R.id.spinnerActivity);

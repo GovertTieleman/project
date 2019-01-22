@@ -33,7 +33,6 @@ public class DiaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary);
 
-
         // get views
         date = findViewById(R.id.dayOrMonth);
         caloriesLeft = findViewById(R.id.caloriesLeft);
@@ -85,6 +84,7 @@ public class DiaryActivity extends AppCompatActivity {
 
             // start MenuActivity with intent
             startActivity(intent);
+            finish();
         }
     }
 

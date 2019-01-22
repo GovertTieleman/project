@@ -1,7 +1,10 @@
 package com.example.govert.nutriconscious;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,6 +33,18 @@ public class SearchActivity extends AppCompatActivity implements SearchRequest.C
 
         // set listener
         lv.setOnItemClickListener(new ListItemClickListener());
+
+        // create BroadCastReceiver in order to finish activity after food submitted
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if (action.equals("finish")) {
+                    finish();
+                }
+            }
+        };
+        registerReceiver(broadcastReceiver, new IntentFilter("finish"));
     }
 
     private class ListItemClickListener implements AdapterView.OnItemClickListener {

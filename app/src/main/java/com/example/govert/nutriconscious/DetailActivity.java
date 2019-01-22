@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -41,8 +40,6 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
 
         // get source
         source = getIntent().getStringExtra("source");
-
-        Log.d("gotsource ", source);
 
         // get FoodItemSimple if source = search
         if (source.equals("search")) {
@@ -157,13 +154,17 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
         // get db
         FoodDatabaseHelper db = FoodDatabaseHelper.getInstance(this.getApplicationContext());
 
-        // insert food or update depending on source
+        // insert or update food depending on source
         if (source.equals("search")) {
             db.insertFood(detailedFood);
         }
         else {
             db.updateFood(detailedFood);
         }
+
+        // broadcast to search
+        Intent intent = new Intent("finish");
+        sendBroadcast(intent);
 
         // return to main
         startActivity(new Intent(this, DiaryActivity.class));
@@ -206,7 +207,7 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
+        startActivity(new Intent(DetailActivity.this, DiaryActivity.class));
         finish();
     }
 }

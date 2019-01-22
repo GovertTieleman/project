@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void profileClicked(View view) {
-        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+        startActivity(new Intent(MainActivity.this, PlanActivity.class));
         finish();
     }
 }
