@@ -67,6 +67,7 @@
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/colorPrimary"
         android:onClick="searchClicked"
+        app:fabSize="mini"
         app:layout_constraintBottom_toTopOf="@+id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add" />
@@ -82,18 +83,18 @@
 
         <ImageButton
             android:id="@+id/diaryButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
             android:layout_gravity="start|center"
             app:srcCompat="@drawable/ic_diary"
-            android:layout_marginStart="50dp"
+            android:layout_marginStart="25dp"
             android:background="@color/colorPrimary"
             android:onClick="diaryClicked"/>
 
         <ImageButton
             android:id="@+id/homeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             app:srcCompat="@drawable/ic_home"
             android:background="@color/colorPrimary"
@@ -101,11 +102,11 @@
 
         <ImageButton
             android:id="@+id/profileButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
             android:layout_gravity="end|center"
             app:srcCompat="@drawable/ic_profile"
-            android:layout_marginEnd="50dp"
+            android:layout_marginEnd="25dp"
             android:background="@color/colorPrimary"
             android:onClick="profileClicked"/>
     </android.support.design.widget.BottomNavigationView>

@@ -112,7 +112,7 @@
         android:id="@+id/buttonAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="addToDiary"
+        android:onClick="fabClicked"
         android:src="@drawable/ic_check"
         android:backgroundTint="@color/colorPrimary"
         android:layout_margin="16dp"

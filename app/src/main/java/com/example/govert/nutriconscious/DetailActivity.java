@@ -1,11 +1,11 @@
 package com.example.govert.nutriconscious;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -18,12 +18,13 @@ import java.util.Locale;
 import static com.example.govert.nutriconscious.FoodItem.makeDate;
 
 public class DetailActivity extends AppCompatActivity implements DetailRequest.Callback {
+    private TextView name, servingSize, KCal;
     private EditText numberEdit;
-    private FloatingActionButton add;
     private FoodItem detailedFood;
     private FoodItemSimple selectedFood;
     private ListView lv;
     private Float numberOfServings;
+    private String source;
 
 
     @Override
@@ -31,46 +32,79 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        // get selectedFood
-        selectedFood = (FoodItemSimple) getIntent().getSerializableExtra("foodItem");
-
-        // get numberOfServings
-        numberOfServings = selectedFood.getServingQTY();
-
-        // get button, listView and numberEdit
-        add = (FloatingActionButton) findViewById(R.id.buttonAdd);
+        // get Views
+        name = (TextView) findViewById(R.id.textViewName);
+        servingSize = (TextView) findViewById(R.id.textViewServingSizeUnit);
+        KCal = (TextView) findViewById(R.id.textViewAmountOfKCal);
         lv = (ListView) findViewById(R.id.listViewNutrients);
         numberEdit = (EditText) findViewById(R.id.editTextAmount);
 
+        // get source
+        source = getIntent().getStringExtra("source");
+
+        Log.d("gotsource ", source);
+
+        // get FoodItemSimple if source = search
+        if (source.equals("search")) {
+            // set selectedFood
+            selectedFood = (FoodItemSimple) getIntent().getSerializableExtra("foodItem");
+
+            // set number of servings
+            numberOfServings = selectedFood.getServingQTY();
+
+            // create url
+            String url = "https://api.nutritionix.com/v1_1/item?id=" + selectedFood.getIdAPI() +
+                    "&appId=3f320916&appKey=fc58ccfd02cc5e1d32acce42ecee8bf6";
+
+            // request search and setNutrients from response handler
+            DetailRequest x = new DetailRequest(this);
+            x.getDetails(this, url, selectedFood);
+        }
+
+        // get regular FoodItem if source = diary
+        else {
+            // set detailedFood
+            detailedFood = (FoodItem) getIntent().getSerializableExtra("foodItem");
+
+            // set number of servings
+            numberOfServings = detailedFood.getServingQTY();
+
+            // setNutrients
+            setNutrients();
+
+            // set numberEdit listener
+            this.setListener();
+        }
+
         // set views
         this.setViews();
-
-        // create url
-        String url = "https://api.nutritionix.com/v1_1/item?id=" + selectedFood.getIdAPI() +
-                "&appId=3f320916&appKey=fc58ccfd02cc5e1d32acce42ecee8bf6";
-
-        // request search
-        DetailRequest x = new DetailRequest(this);
-        x.getDetails(this, url, selectedFood);
     }
 
     public void setViews() {
-        // get TextViews
-        TextView name = (TextView) findViewById(R.id.textViewName);
-        TextView servingSize = (TextView) findViewById(R.id.textViewServingSizeUnit);
-        TextView KCal = (TextView) findViewById(R.id.textViewAmountOfKCal);
-
-        // set name and servingSize
-        name.setText(selectedFood.getName());
-        servingSize.setText(String.format("1 %s", selectedFood.getServingSize()));
-
         // set numberOfServings
-        numberEdit.setText(String.format(Locale.getDefault(), "%.0f", numberOfServings));
+        numberEdit.setText(String.format(Locale.getDefault(), "%.2f", numberOfServings));
 
-        // set calories per serving
-        String calories = String.format(Locale.getDefault(), "%.2f",
-                selectedFood.getCalories());
-        KCal.setText(calories);
+        // use selectedFood or detailedFood depending on source
+        if (source.equals("search")) {
+            // set name and servingSize
+            name.setText(selectedFood.getName());
+            servingSize.setText(String.format("1 %s", selectedFood.getServingSize()));
+
+            // set calories per serving
+            String calories = String.format(Locale.getDefault(), "%.2f",
+                    selectedFood.getCalories());
+            KCal.setText(calories);
+        }
+        else {
+            // set name and servingSize
+            name.setText(detailedFood.getName());
+            servingSize.setText(String.format("1 %s", detailedFood.getServingSize()));
+
+            // set calories per serving
+            String calories = String.format(Locale.getDefault(), "%.2f",
+                    detailedFood.getCalories());
+            KCal.setText(calories);
+        }
     }
 
     private void setNutrients() {
@@ -112,20 +146,28 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
         this.setNutrients();
     }
 
-    public void addToDiary(View view) {
+    public void fabClicked(View view) {
         // get date and set date
         String date = makeDate();
         detailedFood.setDate(date);
 
+        // set number of servings for detailedFood
+        detailedFood.setServingQTY(numberOfServings);
+
         // get db
         FoodDatabaseHelper db = FoodDatabaseHelper.getInstance(this.getApplicationContext());
 
-        // insert food
-        db.insertFood(detailedFood);
+        // insert food or update depending on source
+        if (source.equals("search")) {
+            db.insertFood(detailedFood);
+        }
+        else {
+            db.updateFood(detailedFood);
+        }
 
         // return to main
+        startActivity(new Intent(this, DiaryActivity.class));
         finish();
-        startActivity(new Intent(this, MainActivity.class));
     }
 
     @Override
@@ -159,5 +201,12 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
                 // Auto-generated method stub
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        finish();
     }
 }

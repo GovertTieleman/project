@@ -40,6 +40,7 @@ public class SearchActivity extends AppCompatActivity implements SearchRequest.C
             // make intent
             Intent intent = new Intent(SearchActivity.this, DetailActivity.class);
             intent.putExtra("foodItem", foodSelected);
+            intent.putExtra("source", "search");
 
             // start MenuActivity with intent
             startActivity(intent);
@@ -90,5 +91,30 @@ public class SearchActivity extends AppCompatActivity implements SearchRequest.C
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        // initialize intent
+        Intent intent;
+
+        // get source
+        String source = getIntent().getStringExtra("source");
+
+        // if source is main, go back
+        if (source.equals("main")) {
+            intent = new Intent(SearchActivity.this, MainActivity.class);
+        }
+
+        // if source is not main, go to diary
+        else {
+            intent = new Intent(SearchActivity.this, DiaryActivity.class);
+        }
+
+        // go
+        startActivity(intent);
+        finish();
     }
 }

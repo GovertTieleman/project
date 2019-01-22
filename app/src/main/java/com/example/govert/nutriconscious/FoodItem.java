@@ -130,44 +130,47 @@ public class FoodItem implements Serializable {
         Calendar calendar = Calendar.getInstance();
         String date = df.format(Calendar.getInstance(Locale.getDefault()).getTime());
 
-        Log.d("the current date is: ", date);
-
         return date;
     }
 
     public static ArrayList<FoodItem> getFoodsFromCursor(Cursor cursor) {
-
+        // initialize ArrayList
         ArrayList<FoodItem> foodItems = new ArrayList<>();
-
-        cursor.moveToFirst();
 
         // check if a food exists
         try {
             while (cursor.moveToNext()) {
 
-                Log.d("trying to get foodItems", cursor.getString(cursor.getColumnIndex("item_name")));
-
+                // get all the properties
                 String name = cursor.getString(cursor.getColumnIndex("item_name"));
+
                 int id = cursor.getInt(cursor.getColumnIndex("_id"));
+
                 String date = cursor.getString(cursor.getColumnIndex("date"));
 
                 Float calories = cursor.getFloat(cursor.getColumnIndex("calories"));
+
                 Float protein = cursor.getFloat(cursor.getColumnIndex("protein"));
+
                 Float carbohydrate = cursor.getFloat(cursor.getColumnIndex(
                         "carbohydrate"));
                 Float fat = cursor.getFloat(cursor.getColumnIndex("fat"));
 
                 Float servingQTY = cursor.getFloat(cursor.getColumnIndex(
                         "serving_quantity"));
+
                 String servingSize = cursor.getString(cursor.getColumnIndex(
                         "serving_size"));
+
                 Float servingWeight = cursor.getFloat(cursor.getColumnIndex(
                         "serving_weight"));
 
+                // add new FoodItem to ArrayList
                 foodItems.add(new FoodItem(name, id, date, calories, protein, carbohydrate, fat,
                         servingQTY, servingSize, servingWeight));
             }
         } finally {
+            // close cursor
             cursor.close();
         }
 

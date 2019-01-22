@@ -16,11 +16,27 @@ public class ProfileActivity extends AppCompatActivity {
     public void updateClicked(View view) {
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+        finish();
+    }
+
     public void diaryClicked(View view) {
         startActivity(new Intent(ProfileActivity.this, DiaryActivity.class));
+        finish();
+
     }
 
     public void homeClicked(View view) {
         startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+        finish();
+    }
+
+    public void profileClicked(View view) {
+        startActivity(new Intent(ProfileActivity.this, ProfileActivity.class));
+        finish();
     }
 }

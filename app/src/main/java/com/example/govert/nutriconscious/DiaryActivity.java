@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public class DiaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary);
 
+
         // get views
         date = findViewById(R.id.dayOrMonth);
         caloriesLeft = findViewById(R.id.caloriesLeft);
@@ -57,6 +59,9 @@ public class DiaryActivity extends AppCompatActivity {
         // set DiaryAdapter
         lv.setAdapter(adapter);
 
+        // set listener
+        lv.setOnItemClickListener(new ListItemClickListener());
+
         // set caloriesLeft
         Float caloriesUser = BigDecimal.valueOf(user.getCalories()).floatValue();
         Float caloriesFood = 0f;
@@ -68,20 +73,53 @@ public class DiaryActivity extends AppCompatActivity {
                 caloriesFood, (caloriesUser - caloriesFood)));
     }
 
+    private class ListItemClickListener implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            FoodItem foodSelected = foodItems.get(position);
+
+            // make intent
+            Intent intent = new Intent(DiaryActivity.this, DetailActivity.class);
+            intent.putExtra("foodItem", foodSelected);
+            intent.putExtra("source", "diary");
+
+            // start MenuActivity with intent
+            startActivity(intent);
+        }
+    }
 
     public void searchClicked(View view) {
-        startActivity(new Intent(DiaryActivity.this, SearchActivity.class));
+        // make intent
+        Intent intent = new Intent(DiaryActivity.this, SearchActivity.class);
+
+        // put source
+        intent.putExtra("source", "diary");
+
+        // startActivity
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        startActivity(new Intent(DiaryActivity.this, MainActivity.class));
+        finish();
     }
 
     public void diaryClicked(View view) {
         startActivity(new Intent(DiaryActivity.this, DiaryActivity.class));
+        finish();
     }
 
     public void homeClicked(View view) {
         startActivity(new Intent(DiaryActivity.this, MainActivity.class));
+        finish();
     }
 
     public void profileClicked(View view) {
         startActivity(new Intent(DiaryActivity.this, ProfileActivity.class));
+        finish();
     }
 }

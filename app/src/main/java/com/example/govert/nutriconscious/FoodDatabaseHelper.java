@@ -5,8 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.List;
+import java.util.Locale;
 
 public class FoodDatabaseHelper extends SQLiteOpenHelper {
 
@@ -54,6 +56,33 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
     public Cursor selectFoodsByDate(String date) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT * FROM food", null);
+    }
+
+    public void updateFood(FoodItem foodItem) {
+        // get db
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Log.d("updateFood called", foodItem.getServingQTY().toString());
+
+        // declare values
+        ContentValues values = new ContentValues();
+
+        // put values
+        values.put("item_name", foodItem.getName());
+        values.put("date", foodItem.getDate());
+        values.put("calories", foodItem.getCalories());
+        values.put("protein", foodItem.getProtein());
+        values.put("carbohydrate", foodItem.getCarbohydrate());
+        values.put("fat", foodItem.getFat());
+        values.put("serving_quantity", foodItem.getServingQTY());
+        values.put("serving_size", foodItem.getServingSize());
+
+        // get id string
+        int id = foodItem.getId();
+        String[] whereArgs = new String[] {String.valueOf(id)};
+
+        // update entry
+        db.update(TABLE_NAME_FOOD, values, "_id=?", whereArgs);
     }
 
     public void insertFood(FoodItem foodItem) {

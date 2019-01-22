@@ -43,23 +43,37 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    public void searchClicked(View view) {
-        startActivity(new Intent(MainActivity.this, SearchActivity.class));
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        finish();
     }
 
-    public void planClicked(View view) {
-        startActivity(new Intent(MainActivity.this, PlanActivity.class));
+    public void searchClicked(View view) {
+        // make intent
+        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+
+        // put source
+        intent.putExtra("source", "main");
+
+        // startActivity
+        startActivity(intent);
+        finish();
     }
 
     public void diaryClicked(View view) {
         startActivity(new Intent(MainActivity.this, DiaryActivity.class));
+        finish();
     }
 
     public void homeClicked(View view) {
         startActivity(new Intent(MainActivity.this, MainActivity.class));
+        finish();
     }
 
     public void profileClicked(View view) {
         startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+        finish();
     }
 }

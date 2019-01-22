@@ -36,7 +36,7 @@ public class SearchAdapter extends ArrayAdapter<FoodItemSimple> {
         itemName.setText(currentFoodItem.getName());
 
         TextView serving = (TextView) listItem.findViewById(R.id.textViewServing);
-        serving.setText(String.format(Locale.getDefault(), "%.0f %s",
+        serving.setText(String.format(Locale.getDefault(), "%.2f %s",
                 currentFoodItem.getServingQTY(), currentFoodItem.getServingSize()));
 
         TextView KCal = (TextView) listItem.findViewById(R.id.textViewKCal);

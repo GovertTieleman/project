@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class DiaryAdapter extends ArrayAdapter<FoodItem> {
     private ArrayList<FoodItem> foodItems;
@@ -38,7 +39,8 @@ public class DiaryAdapter extends ArrayAdapter<FoodItem> {
         serving.setText(String.format("%s %s", currentFoodItem.getServingQTY().toString(), currentFoodItem.getServingSize()));
 
         TextView KCal = (TextView) listItem.findViewById(R.id.textViewKCal);
-        KCal.setText(String.format("%s KCal", currentFoodItem.getCalories().toString()));
+        KCal.setText(String.format(Locale.getDefault(), "%.2f KCal",
+                (currentFoodItem.getCalories() * currentFoodItem.getServingQTY())));
 
         return listItem;
     }
