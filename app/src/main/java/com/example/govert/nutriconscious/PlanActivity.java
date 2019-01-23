@@ -1,9 +1,11 @@
 package com.example.govert.nutriconscious;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -41,11 +43,27 @@ public class PlanActivity extends AppCompatActivity {
         etPlan = (EditText) findViewById(R.id.editTextPlan);
         backNav = (ImageButton) findViewById(R.id.backNav);
 
+        // set Views
         setViews();
     }
 
+    public void makePlan() {
+        // create entry object
+        User user = new User(null, gender, height, weight, age, activity, goal);
+
+        // get db
+        UserDataBaseHelper db = UserDataBaseHelper.getInstance(this.getApplicationContext());
+
+        // insert into db
+        db.insertUser(user);
+
+        // go to MainActivity
+        startActivity(new Intent(PlanActivity.this, MainActivity.class));
+        finish();
+    }
+
     public void setViews() {
-        // make everything invisible first
+        // start by making everything invisible
         rg.setVisibility(View.INVISIBLE);
         rg.clearCheck();
         rb1.setVisibility(View.INVISIBLE);
@@ -55,7 +73,7 @@ public class PlanActivity extends AppCompatActivity {
         etPlan.setVisibility(View.INVISIBLE);
         etPlan.setText("");
 
-        // except for backNav since we need it for everything, except the first question
+        // except for backNav
         backNav.setVisibility(View.VISIBLE);
 
         // show the right views
@@ -65,6 +83,9 @@ public class PlanActivity extends AppCompatActivity {
                 tvPlan.setVisibility(View.VISIBLE);
                 etPlan.setVisibility(View.VISIBLE);
                 backNav.setVisibility(View.INVISIBLE);
+                etPlan.setEnabled(true);
+                showKeyboard(this);
+
 
                 // set text
                 tvPlan.setText("Height in cm");
@@ -78,6 +99,8 @@ public class PlanActivity extends AppCompatActivity {
                 // set visibility
                 tvPlan.setVisibility(View.VISIBLE);
                 etPlan.setVisibility(View.VISIBLE);
+                etPlan.setEnabled(true);
+                showKeyboard(this);
 
                 // set text
                 tvPlan.setText("Weight in kg");
@@ -91,6 +114,8 @@ public class PlanActivity extends AppCompatActivity {
                 // set visibility
                 tvPlan.setVisibility(View.VISIBLE);
                 etPlan.setVisibility(View.VISIBLE);
+                etPlan.setEnabled(true);
+                showKeyboard(this);
 
                 // set text
                 tvPlan.setText("Age");
@@ -105,6 +130,7 @@ public class PlanActivity extends AppCompatActivity {
                 rg.setVisibility(View.VISIBLE);
                 rb1.setVisibility(View.VISIBLE);
                 rb2.setVisibility(View.VISIBLE);
+                etPlan.setEnabled(false);
 
                 // set text
                 rb1.setText("Male");
@@ -127,6 +153,7 @@ public class PlanActivity extends AppCompatActivity {
                 rb1.setVisibility(View.VISIBLE);
                 rb2.setVisibility(View.VISIBLE);
                 rb3.setVisibility(View.VISIBLE);
+                etPlan.setEnabled(false);
 
                 // set text
                 rb1.setText("Sedentary");
@@ -153,6 +180,7 @@ public class PlanActivity extends AppCompatActivity {
                 rb1.setVisibility(View.VISIBLE);
                 rb2.setVisibility(View.VISIBLE);
                 rb3.setVisibility(View.VISIBLE);
+                etPlan.setEnabled(false);
 
                 // set text
                 rb1.setText("Lose weight");
@@ -176,6 +204,7 @@ public class PlanActivity extends AppCompatActivity {
             case 6:
                 // set visibility
                 tvPlan.setVisibility(View.VISIBLE);
+                etPlan.setEnabled(false);
 
                 // set text
                 tvPlan.setText("Finished making plan. Click continue to start working " +
@@ -184,25 +213,11 @@ public class PlanActivity extends AppCompatActivity {
         }
     }
 
-    public void makePlan() {
-        // create entry object
-        User user = new User(null, gender, height, weight, age, activity, goal);
-
-        // get db
-        UserDataBaseHelper db = UserDataBaseHelper.getInstance(this.getApplicationContext());
-
-        // insert into db
-        db.insertUser(user);
-
-        // go to MainActivity
-        startActivity(new Intent(PlanActivity.this, MainActivity.class));
-        finish();
-    }
-
     public void forwardClicked(View view) {
         // check which stage the user is at and do the appropriate action
         switch (stage) {
             case 0:
+                // check if user entered a number with try-catch block
                 try {
                     // get height
                     height = Integer.parseInt(etPlan.getText().toString());
@@ -226,6 +241,7 @@ public class PlanActivity extends AppCompatActivity {
                     break;
                 }
             case 1:
+                // check if user entered a number with try-catch block
                 try {
                     // get weight
                     weight = Integer.parseInt(etPlan.getText().toString());
@@ -249,6 +265,7 @@ public class PlanActivity extends AppCompatActivity {
                     break;
                 }
             case 2:
+                // check if user entered a number with try-catch block
                 try {
                     // get age
                     age = Integer.parseInt(etPlan.getText().toString());
@@ -272,6 +289,7 @@ public class PlanActivity extends AppCompatActivity {
                     break;
                 }
             case 3:
+                // get user choice
                 if (rb1.isChecked()) {
                     gender = "male";
                     stage = stage + 1;
@@ -287,6 +305,7 @@ public class PlanActivity extends AppCompatActivity {
                     break;
                 }
             case 4:
+                // get user choice
                 if (rb1.isChecked()) {
                     activity = "sedentary";
                     stage = stage + 1;
@@ -307,6 +326,7 @@ public class PlanActivity extends AppCompatActivity {
                     break;
                 }
             case 5:
+                // get user choice
                 if (rb1.isChecked()) {
                     goal = "lose";
                     stage = stage + 1;
@@ -329,6 +349,12 @@ public class PlanActivity extends AppCompatActivity {
             case 6:
                 makePlan();
         }
+    }
+
+    private void showKeyboard(Activity act) {
+        // get inputMethod and show keyboard
+        InputMethodManager imm = (InputMethodManager) act.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(etPlan, InputMethodManager.SHOW_IMPLICIT);
     }
 
     @Override
