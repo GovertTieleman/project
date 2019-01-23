@@ -2,19 +2,21 @@ package com.example.govert.nutriconscious;
 
 import android.database.Cursor;
 
+import org.jsoup.select.Evaluator;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
 
     private Integer id;
     private String gender;
-    private Integer height;
-    private Integer weight;
-    private Integer age;
+    private int height;
+    private int weight;
+    private int age;
     private String activity;
     private String goal;
 
-    public User(Integer id, String gender, Integer height, Integer weight, Integer age, String activity, String goal) {
+    public User(Integer id, String gender, int height, int weight, int age, String activity, String goal) {
         this.id = id;
         this.gender = gender;
         this.height = height;
@@ -75,27 +77,27 @@ public class User implements Serializable {
         this.gender = gender;
     }
 
-    public Integer getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    public void setHeight(Integer height) {
+    public void setHeight(int height) {
         this.height = height;
     }
 
-    public Integer getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public void setWeight(Integer weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 
-    public Integer getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(int age) {
         this.age = age;
     }
 

@@ -80,6 +80,8 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
     public void setViews() {
         // set numberOfServings
         numberEdit.setText(String.format(Locale.getDefault(), "%.2f", numberOfServings));
+        numberEdit.setSelection(numberEdit.getText().length());
+
 
         // use selectedFood or detailedFood depending on source
         if (source.equals("search")) {

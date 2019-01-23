@@ -1,63 +1,152 @@
 package com.example.govert.nutriconscious;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class PlanActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+import java.util.Locale;
+
+public class PlanActivity extends AppCompatActivity {
     private String gender, activity, goal;
+    private int weight, height, age;
+    private int stage;
+    private TextView tvPlan;
+    private EditText etPlan;
+    private RadioGroup rg;
+    private RadioButton rb1, rb2, rb3;
+    private FloatingActionButton backNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plan);
+        // set the stage ;)
+        stage = 0;
 
-        // get spinner options
-        String[] activityLevels = new String[]{"sedentary", "normal", "active"};
-        String[] goals = new String[]{"lose", "maintain", "gain"};
+        // get radioGroup and buttons
+        rg = (RadioGroup) findViewById(R.id.radioGroupPlan);
+        rb1 = (RadioButton) findViewById(R.id.rb1);
+        rb2 = (RadioButton) findViewById(R.id.rb2);
+        rb3 = (RadioButton) findViewById(R.id.rb3);
 
-        // make activity level spinner
-        Spinner spinnerActivity = (Spinner) findViewById(R.id.spinnerActivity);
-        ArrayAdapter<String> adapterActivity = new ArrayAdapter<>(PlanActivity.this,
-                R.layout.support_simple_spinner_dropdown_item, activityLevels);
-        adapterActivity.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinnerActivity.setAdapter(adapterActivity);
+        // get views
+        tvPlan = (TextView) findViewById(R.id.textViewPlan);
+        etPlan = (EditText) findViewById(R.id.editTextPlan);
+        backNav = (FloatingActionButton) findViewById(R.id.backNav);
 
-        // make goal spinner
-        Spinner spinnerGoals = (Spinner) findViewById(R.id.spinnerGoal);
-        ArrayAdapter<String> adapterGoals = new ArrayAdapter<>(PlanActivity.this,
-                R.layout.support_simple_spinner_dropdown_item, goals);
-        adapterGoals.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinnerGoals.setAdapter(adapterGoals);
-
-        // set listener for spinner
-        spinnerActivity.setOnItemSelectedListener(this);
-        spinnerGoals.setOnItemSelectedListener(this);
-
-        // get radioGroup
-        RadioGroup radioGroupGender = (RadioGroup) findViewById(R.id.radioGroupGender);
-
-        // set listener for radioGroup
-        radioGroupGender.setOnCheckedChangeListener(new OnCheckedChangeListener());
+        setViews();
     }
 
-    public void makePlan(View view) {
-        // get height, weight and age from views
-        EditText heightForm = findViewById(R.id.editTextHeight);
-        Integer height = Integer.parseInt(heightForm.getText().toString());
+    public void setViews() {
+        // make everything invisible first
+        rg.setVisibility(View.INVISIBLE);
+        rg.clearCheck();
+        rb1.setVisibility(View.INVISIBLE);
+        rb2.setVisibility(View.INVISIBLE);
+        rb3.setVisibility(View.INVISIBLE);
+        tvPlan.setVisibility(View.INVISIBLE);
+        etPlan.setVisibility(View.INVISIBLE);
+        backNav.show();
+        etPlan.setText("");
 
-        EditText weightForm = findViewById(R.id.editTextWeight);
-        Integer weight = Integer.parseInt(weightForm.getText().toString());
+        // show the right views
+        switch (stage) {
+            case 0:
+                // set visibility
+                tvPlan.setVisibility(View.VISIBLE);
+                etPlan.setVisibility(View.VISIBLE);
+                backNav.hide();
 
-        EditText ageForm = findViewById(R.id.editTextAge);
-        Integer age = Integer.parseInt(ageForm.getText().toString());
+                // set text
+                tvPlan.setText("Height in cm");
+                if (height != 0) {
+                    etPlan.setText(String.format(Locale.getDefault(), "%d", height));
+                    etPlan.setSelection(etPlan.getText().length());
+                }
 
+                break;
+            case 1:
+                // set visibility
+                tvPlan.setVisibility(View.VISIBLE);
+                etPlan.setVisibility(View.VISIBLE);
+
+                // set text
+                tvPlan.setText("Weight in kg");
+                if (weight != 0) {
+                    etPlan.setText(String.format(Locale.getDefault(), "%d", weight));
+                    etPlan.setSelection(etPlan.getText().length());
+                }
+
+                break;
+            case 2:
+                // set visibility
+                tvPlan.setVisibility(View.VISIBLE);
+                etPlan.setVisibility(View.VISIBLE);
+
+                // set text
+                tvPlan.setText("Age");
+                if (age != 0) {
+                    etPlan.setText(String.format(Locale.getDefault(), "%d", age));
+                    etPlan.setSelection(etPlan.getText().length());
+                }
+
+                break;
+            case 3:
+                // set visibility
+                rg.setVisibility(View.VISIBLE);
+                rb1.setVisibility(View.VISIBLE);
+                rb2.setVisibility(View.VISIBLE);
+
+                // set text
+                rb1.setText("Male");
+                rb2.setText("Female");
+
+                break;
+            case 4:
+                // set visibility
+                rg.setVisibility(View.VISIBLE);
+                rb1.setVisibility(View.VISIBLE);
+                rb2.setVisibility(View.VISIBLE);
+                rb3.setVisibility(View.VISIBLE);
+
+                // set text
+                rb1.setText("Sedentary");
+                rb2.setText("normal");
+                rb3.setText("Active");
+
+                // set checked
+                break;
+            case 5:
+                // set visibility
+                rg.setVisibility(View.VISIBLE);
+                rb1.setVisibility(View.VISIBLE);
+                rb2.setVisibility(View.VISIBLE);
+                rb3.setVisibility(View.VISIBLE);
+
+                // set text
+                rb1.setText("Lose weight");
+                rb2.setText("Maintain current weight");
+                rb3.setText("Gain weight");
+                break;
+            case 6:
+                // set visibility
+                tvPlan.setVisibility(View.VISIBLE);
+
+                // set text
+                tvPlan.setText("Finished making plan. Click continue to start working " +
+                        "on your goal!");
+                break;
+        }
+    }
+
+    public void makePlan() {
         // create entry object
         User user = new User(null, gender, height, weight, age, activity, goal);
 
@@ -67,66 +156,155 @@ public class PlanActivity extends AppCompatActivity implements AdapterView.OnIte
         // insert into db
         db.insertUser(user);
 
-        // go back to MainActivity
+        // go to MainActivity
+        startActivity(new Intent(PlanActivity.this, MainActivity.class));
         finish();
-        startActivity(new Intent(this, MainActivity.class));
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        int parentId = parent.getId();
-        switch (parentId) {
-            case R.id.spinnerActivity:
-                switch (position) {
-                    case 0:
-                        activity = "sedentary";
+    public void fabClicked(View view) {
+        // check which stage the user is at and do the appropriate action
+        switch (stage) {
+            case 0:
+                try {
+                    // get height
+                    height = Integer.parseInt(etPlan.getText().toString());
+
+                    // check if realistic
+                    if (height >= 80 && height <= 300) {
+                        stage = stage + 1;
+                        setViews();
                         break;
-                    case 1:
-                        activity = "normal";
+                    }
+                    else {
+                        Toast.makeText(this, "Please enter a number between 80 and 300",
+                                Toast.LENGTH_LONG).show();
                         break;
-                    case 2:
-                        activity = "active";
-                        break;
+                    }
                 }
-                break;
-            case R.id.spinnerGoal:
-                switch (position) {
-                    case 0:
-                        goal = "loss";
-                        break;
-                    case 1:
-                        goal = "maintain";
-                        break;
-                    case 2:
-                        goal = "gain";
-                        break;
+                catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Please enter your height in cm",
+                            Toast.LENGTH_LONG).show();
+                    break;
                 }
-                break;
-        }
-    }
+            case 1:
+                try {
+                    // get weight
+                    weight = Integer.parseInt(etPlan.getText().toString());
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        // auto generated method stub
-    }
+                    // check if realistic
+                    if (weight >= 30 && weight <= 1000) {
+                        stage = stage + 1;
+                        setViews();
+                        break;
+                    }
+                    else {
+                        Toast.makeText(this, "Please enter a number between 30 and " +
+                                        "1000", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Please enter your weight in kg",
+                            Toast.LENGTH_LONG).show();
+                    break;
+                }
+            case 2:
+                try {
+                    // get age
+                    age = Integer.parseInt(etPlan.getText().toString());
 
-    private class OnCheckedChangeListener implements RadioGroup.OnCheckedChangeListener {
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-            switch (checkedId) {
-                case R.id.male:
+                    // check if realistic
+                    if (age >= 1 && age <= 150) {
+                        stage = stage + 1;
+                        setViews();
+                        break;
+                    }
+                    else {
+                        Toast.makeText(this, "Please enter a number between 1 and 150",
+                                Toast.LENGTH_LONG).show();
+                        break;
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Please enter your age in years",
+                            Toast.LENGTH_LONG).show();
+                    break;
+                }
+            case 3:
+                if (rb1.isChecked()) {
                     gender = "male";
+                    stage = stage + 1;
+                    setViews();
                     break;
-                case R.id.female:
+                } else if (rb2.isChecked()) {
                     gender = "female";
+                    stage = stage + 1;
+                    setViews();
                     break;
-            }
+                } else {
+                    Toast.makeText(this, "Please select gender", Toast.LENGTH_LONG).show();
+                    break;
+                }
+            case 4:
+                if (rb1.isChecked()) {
+                    activity = "sedentary";
+                    stage = stage + 1;
+                    setViews();
+                    break;
+                } else if (rb2.isChecked()) {
+                    activity = "normal";
+                    stage = stage + 1;
+                    setViews();
+                    break;
+                } else if (rb3.isChecked()) {
+                    activity = "active";
+                    stage = stage + 1;
+                    setViews();
+                    break;
+                } else {
+                    Toast.makeText(this, "Please select your level of activity", Toast.LENGTH_LONG).show();
+                    break;
+                }
+            case 5:
+                if (rb1.isChecked()) {
+                    goal = "lose";
+                    stage = stage + 1;
+                    setViews();
+                    break;
+                } else if (rb2.isChecked()) {
+                    goal = "maintain";
+                    stage = stage + 1;
+                    setViews();
+                    break;
+                } else if (rb3.isChecked()) {
+                    goal = "gain";
+                    stage = stage + 1;
+                    setViews();
+                    break;
+                } else {
+                    Toast.makeText(this, "Please select your weight goal", Toast.LENGTH_LONG).show();
+                    break;
+                }
+            case 6:
+                makePlan();
         }
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+        if (stage == 0) {
+            finish();
+        }
+        else {
+            stage = stage - 1;
+            setViews();
+        }
+    }
+
+    public void backClicked(View view) {
+        onBackPressed();
     }
 }
