@@ -1,11 +1,11 @@
 package com.example.govert.nutriconscious;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -21,7 +21,7 @@ public class PlanActivity extends AppCompatActivity {
     private EditText etPlan;
     private RadioGroup rg;
     private RadioButton rb1, rb2, rb3;
-    private FloatingActionButton backNav;
+    private ImageButton backNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class PlanActivity extends AppCompatActivity {
         // get views
         tvPlan = (TextView) findViewById(R.id.textViewPlan);
         etPlan = (EditText) findViewById(R.id.editTextPlan);
-        backNav = (FloatingActionButton) findViewById(R.id.backNav);
+        backNav = (ImageButton) findViewById(R.id.backNav);
 
         setViews();
     }
@@ -53,8 +53,10 @@ public class PlanActivity extends AppCompatActivity {
         rb3.setVisibility(View.INVISIBLE);
         tvPlan.setVisibility(View.INVISIBLE);
         etPlan.setVisibility(View.INVISIBLE);
-        backNav.show();
         etPlan.setText("");
+
+        // except for backNav since we need it for everything, except the first question
+        backNav.setVisibility(View.VISIBLE);
 
         // show the right views
         switch (stage) {
@@ -62,7 +64,7 @@ public class PlanActivity extends AppCompatActivity {
                 // set visibility
                 tvPlan.setVisibility(View.VISIBLE);
                 etPlan.setVisibility(View.VISIBLE);
-                backNav.hide();
+                backNav.setVisibility(View.INVISIBLE);
 
                 // set text
                 tvPlan.setText("Height in cm");
@@ -108,6 +110,16 @@ public class PlanActivity extends AppCompatActivity {
                 rb1.setText("Male");
                 rb2.setText("Female");
 
+                // set checked
+                if (gender != null) {
+                    if (gender.equals("male")) {
+                        rb1.setChecked(true);
+                    }
+                    else {
+                        rb2.setChecked(true);
+                    }
+                }
+
                 break;
             case 4:
                 // set visibility
@@ -122,6 +134,18 @@ public class PlanActivity extends AppCompatActivity {
                 rb3.setText("Active");
 
                 // set checked
+                if (activity != null) {
+                    if (activity.equals("sedentary")) {
+                        rb1.setChecked(true);
+                    }
+                    else if (activity.equals("normal")){
+                        rb2.setChecked(true);
+                    }
+                    else {
+                        rb3.setChecked(true);
+                    }
+                }
+
                 break;
             case 5:
                 // set visibility
@@ -134,6 +158,20 @@ public class PlanActivity extends AppCompatActivity {
                 rb1.setText("Lose weight");
                 rb2.setText("Maintain current weight");
                 rb3.setText("Gain weight");
+
+                // set checked
+                if (goal != null) {
+                    if (goal.equals("lose")) {
+                        rb1.setChecked(true);
+                    }
+                    else if (goal.equals("maintain")){
+                        rb2.setChecked(true);
+                    }
+                    else {
+                        rb3.setChecked(true);
+                    }
+                }
+
                 break;
             case 6:
                 // set visibility
@@ -161,7 +199,7 @@ public class PlanActivity extends AppCompatActivity {
         finish();
     }
 
-    public void fabClicked(View view) {
+    public void forwardClicked(View view) {
         // check which stage the user is at and do the appropriate action
         switch (stage) {
             case 0:

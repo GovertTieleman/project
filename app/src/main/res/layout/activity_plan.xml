@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="male"
-            android:layout_margin="16dp"
+            android:layout_margin="8dp"
             android:textSize="20sp" />
 
         <RadioButton
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="female"
-            android:layout_margin="16dp"
+            android:layout_margin="8dp"
             android:textSize="20sp" />
 
         <RadioButton
@@ -73,34 +73,30 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="female"
-            android:layout_margin="16dp"
+            android:layout_margin="8dp"
             android:textSize="20sp" />
 
     </RadioGroup>
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="fabClicked"
-        android:src="@drawable/ic_check"
-        android:backgroundTint="@color/colorPrimary"
-        android:layout_margin="16dp"
-        app:fabSize="normal"
-        app:layout_constraintTop_toBottomOf="@id/textViewPlan"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-
-    <android.support.design.widget.FloatingActionButton
+    <ImageButton
         android:id="@+id/backNav"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:onClick="backClicked"
-        android:src="@drawable/ic_backnav"
-        android:backgroundTint="@color/colorAccent"
+        app:srcCompat="@drawable/ic_backnav"
+        android:background="@color/backgroundDefault"
         android:layout_margin="16dp"
-        app:fabSize="normal"
         app:layout_constraintTop_toBottomOf="@id/radioGroupPlan"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:onClick="forwardClicked"
+        android:layout_margin="16dp"
+        android:background="@color/backgroundDefault"
+        app:srcCompat="@drawable/ic_forwardnav"
+        app:layout_constraintTop_toBottomOf="@id/radioGroupPlan"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
