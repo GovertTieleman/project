@@ -53,7 +53,7 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
         return instance;
     }
 
-    public Cursor selectFoodsByDate(String date) {
+    public Cursor selectFoods() {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT * FROM food", null);
     }

@@ -44,6 +44,7 @@
             android:layout_gravity="start|center"
             app:srcCompat="@drawable/ic_diary"
             android:layout_marginStart="25dp"
+            android:tint="@color/backgroundDefault"
             android:background="@color/colorPrimary"
             android:onClick="diaryClicked"/>
 
@@ -53,6 +54,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             app:srcCompat="@drawable/ic_home"
+            android:tint="@color/backgroundDefault"
             android:background="@color/colorPrimary"
             android:onClick="homeClicked"/>
 
@@ -62,6 +64,7 @@
             android:layout_height="50dp"
             android:layout_gravity="end|center"
             app:srcCompat="@drawable/ic_profile"
+            android:tint="@color/backgroundDefault"
             android:layout_marginEnd="25dp"
             android:background="@color/colorPrimary"/>
     </android.support.design.widget.BottomNavigationView>

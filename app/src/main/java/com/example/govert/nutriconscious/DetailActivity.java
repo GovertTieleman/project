@@ -14,8 +14,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import static com.example.govert.nutriconscious.FoodItem.makeDate;
-
 public class DetailActivity extends AppCompatActivity implements DetailRequest.Callback {
     private TextView name, servingSize, KCal;
     private EditText numberEdit;
@@ -23,7 +21,8 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
     private FoodItemSimple selectedFood;
     private ListView lv;
     private Float numberOfServings;
-    private String source;
+    private String source, date;
+    private int offset;
 
 
     @Override
@@ -40,6 +39,8 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
 
         // get source
         source = getIntent().getStringExtra("source");
+        offset = getIntent().getIntExtra("dateOffset", 0);
+        date = FoodItem.makeDate(offset);
 
         // get FoodItemSimple if source = search
         if (source.equals("search")) {
@@ -91,7 +92,7 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
 
             // set calories per serving
             String calories = String.format(Locale.getDefault(), "%.2f",
-                    selectedFood.getCalories());
+                    selectedFood.getCalories() / selectedFood.getServingQTY());
             KCal.setText(calories);
         }
         else {
@@ -112,13 +113,13 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
 
         // add calories, protein, carbohydrate and fat
         nutrients.add(new Nutrient("calories", "KCal",
-                detailedFood.getCalories() * numberOfServings));
+                (detailedFood.getCalories() * numberOfServings)));
         nutrients.add(new Nutrient("protein", "g",
-                detailedFood.getProtein() * numberOfServings));
+                (detailedFood.getProtein() * numberOfServings)));
         nutrients.add(new Nutrient("carbohydrate", "g",
-                detailedFood.getCarbohydrate() * numberOfServings));
+                (detailedFood.getCarbohydrate() * numberOfServings)));
         nutrients.add(new Nutrient("fat", "g",
-                detailedFood.getFat() * numberOfServings));
+                (detailedFood.getFat() * numberOfServings)));
 
         // make adapter
         NutrientAdapter adapter = new NutrientAdapter(this, 0, nutrients);
@@ -146,8 +147,6 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
     }
 
     public void fabClicked(View view) {
-        // get date and set date
-        String date = makeDate();
         detailedFood.setDate(date);
 
         // set number of servings for detailedFood
@@ -164,12 +163,12 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
             db.updateFood(detailedFood);
         }
 
-        // broadcast to search
-        Intent intent = new Intent("finish");
-        sendBroadcast(intent);
+        // make intent
+        Intent intent = new Intent(this, DiaryActivity.class);
+        intent.putExtra("dateOffset", offset);
 
-        // return to main
-        startActivity(new Intent(this, DiaryActivity.class));
+        // return to diary
+        startActivity(intent);
         finish();
     }
 

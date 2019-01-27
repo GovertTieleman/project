@@ -84,6 +84,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
+        android:id="@+id/forwardNav"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:onClick="forwardClicked"
@@ -92,5 +93,19 @@
         app:srcCompat="@drawable/ic_forwardnav"
         app:layout_constraintTop_toBottomOf="@id/radioGroupPlan"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="forwardClicked"
+        android:src="@drawable/ic_check"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_margin="16dp"
+        android:tint="@color/backgroundDefault"
+        app:fabSize="normal"
+        app:layout_constraintTop_toBottomOf="@id/radioGroupPlan"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
 </android.support.constraint.ConstraintLayout>

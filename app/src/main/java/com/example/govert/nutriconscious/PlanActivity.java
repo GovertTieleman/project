@@ -2,6 +2,7 @@ package com.example.govert.nutriconscious;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,11 +20,12 @@ public class PlanActivity extends AppCompatActivity {
     private String gender, activity, goal;
     private int weight, height, age;
     private int stage;
-    private TextView tvPlan;
+    private TextView tvPlan, tvWelcome;
     private EditText etPlan;
     private RadioGroup rg;
     private RadioButton rb1, rb2, rb3;
-    private ImageButton backNav;
+    private ImageButton backNav, forwardNav;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +42,11 @@ public class PlanActivity extends AppCompatActivity {
 
         // get views
         tvPlan = (TextView) findViewById(R.id.textViewPlan);
+        tvWelcome = (TextView) findViewById(R.id.textViewWelcome);
         etPlan = (EditText) findViewById(R.id.editTextPlan);
         backNav = (ImageButton) findViewById(R.id.backNav);
+        forwardNav = (ImageButton) findViewById(R.id.forwardNav);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         // set Views
         setViews();
@@ -49,7 +54,7 @@ public class PlanActivity extends AppCompatActivity {
 
     public void makePlan() {
         // create entry object
-        User user = new User(null, gender, height, weight, age, activity, goal);
+        User user = new User(0, gender, height, weight, age, activity, goal);
 
         // get db
         UserDataBaseHelper db = UserDataBaseHelper.getInstance(this.getApplicationContext());
@@ -63,7 +68,7 @@ public class PlanActivity extends AppCompatActivity {
     }
 
     public void setViews() {
-        // start by making everything invisible
+        // make most things invisible first
         rg.setVisibility(View.INVISIBLE);
         rg.clearCheck();
         rb1.setVisibility(View.INVISIBLE);
@@ -72,9 +77,12 @@ public class PlanActivity extends AppCompatActivity {
         tvPlan.setVisibility(View.INVISIBLE);
         etPlan.setVisibility(View.INVISIBLE);
         etPlan.setText("");
+        fab.hide();
 
-        // except for backNav
+        // make other things visible
         backNav.setVisibility(View.VISIBLE);
+        forwardNav.setVisibility(View.VISIBLE);
+        tvWelcome.setVisibility(View.VISIBLE);
 
         // show the right views
         switch (stage) {
@@ -203,12 +211,15 @@ public class PlanActivity extends AppCompatActivity {
                 break;
             case 6:
                 // set visibility
+                forwardNav.setVisibility(View.INVISIBLE);
                 tvPlan.setVisibility(View.VISIBLE);
+                tvWelcome.setVisibility(View.INVISIBLE);
                 etPlan.setEnabled(false);
+                fab.show();
 
                 // set text
-                tvPlan.setText("Finished making plan. Click continue to start working " +
-                        "on your goal!");
+                tvPlan.setText("That's all the information we need! If you want you can " +
+                        "change your profile at any time.");
                 break;
         }
     }
@@ -229,7 +240,8 @@ public class PlanActivity extends AppCompatActivity {
                         break;
                     }
                     else {
-                        Toast.makeText(this, "Please enter a number between 80 and 300",
+                        Toast.makeText(this, "Please enter a number between 80 " +
+                                        "and 300",
                                 Toast.LENGTH_LONG).show();
                         break;
                     }
@@ -301,7 +313,8 @@ public class PlanActivity extends AppCompatActivity {
                     setViews();
                     break;
                 } else {
-                    Toast.makeText(this, "Please select gender", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Please select gender",
+                            Toast.LENGTH_LONG).show();
                     break;
                 }
             case 4:
@@ -322,7 +335,8 @@ public class PlanActivity extends AppCompatActivity {
                     setViews();
                     break;
                 } else {
-                    Toast.makeText(this, "Please select your level of activity", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Please select your level of activity",
+                            Toast.LENGTH_LONG).show();
                     break;
                 }
             case 5:
@@ -343,7 +357,8 @@ public class PlanActivity extends AppCompatActivity {
                     setViews();
                     break;
                 } else {
-                    Toast.makeText(this, "Please select your weight goal", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Please select your weight goal",
+                            Toast.LENGTH_LONG).show();
                     break;
                 }
             case 6:
@@ -353,7 +368,8 @@ public class PlanActivity extends AppCompatActivity {
 
     private void showKeyboard(Activity act) {
         // get inputMethod and show keyboard
-        InputMethodManager imm = (InputMethodManager) act.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) act.getSystemService(
+                Activity.INPUT_METHOD_SERVICE);
         imm.showSoftInput(etPlan, InputMethodManager.SHOW_IMPLICIT);
     }
 

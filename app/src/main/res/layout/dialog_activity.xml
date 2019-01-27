@@ -1,58 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/textViewDialogActivityGoal"
+        android:id="@+id/textViewDialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Activity level"
         android:gravity="start"
         android:textSize="20sp"
         android:paddingTop="20dp"
         android:paddingStart="20dp"
+        android:text="@string/activity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
-        android:id="@+id/radioGroupActivityGoal"
+        android:id="@+id/radioGroupDialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="start"
         android:paddingStart="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewDialogActivityGoal">
+        app:layout_constraintTop_toBottomOf="@id/textViewDialog">
 
         <RadioButton
-            android:id="@+id/radioButton1"
+            android:id="@+id/rbDialog1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="20dp"
-            android:textSize="20sp"
-            android:text="Active" />
+            android:text="@string/sedentary"
+            android:padding="10dp"
+            android:textSize="20sp" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/rbDialog2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="20dp"
-            android:textSize="20sp"
-            android:text="Normal" />
+            android:text="@string/normal"
+            android:padding="10dp"
+            android:textSize="20sp" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/rbDialog3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="20dp"
-            android:textSize="20sp"
-            android:text="Sedentary" />
+            android:text="@string/active"
+            android:padding="10dp"
+            android:textSize="20sp" />
     </RadioGroup>
 
 </android.support.constraint.ConstraintLayout>

@@ -75,4 +75,27 @@ public class UserDataBaseHelper extends SQLiteOpenHelper {
         // insert entry into db
         db.insert(TABLE_NAME_USER, null, values);
     }
+
+    public void updateUser(User user) {
+        // get db
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // declare values
+        ContentValues values = new ContentValues();
+
+        // put values
+        values.put("gender", user.getGender());
+        values.put("height", user.getHeight());
+        values.put("weight", user.getWeight());
+        values.put("age", user.getAge());
+        values.put("activity", user.getActivity());
+        values.put("goal", user.getGoal());
+
+        // get id string
+        int id = user.getId();
+        String[] whereArgs = new String[] {String.valueOf(id)};
+
+        // update entry
+        db.update(TABLE_NAME_USER, values, "_id=?", whereArgs);
+    }
 }

@@ -4,7 +4,17 @@
     <string name="height">Height</string>
     <string name="weight">Weight</string>
     <string name="age">Age</string>
+    <string name="gender">Gender</string>
     <string name="activity">Your level of activity</string>
     <string name="goal">Your weight goal</string>
-    <string name="welcome">Please enter the fields below to get your personalized diet plan</string>
+    <string name="welcome">Welcome! Please enter the fields below and start on your weight goal
+        today!</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="sedentary">Sedentary</string>
+    <string name="normal">Normal</string>
+    <string name="active">Active</string>
+    <string name="lose">Lose weight</string>
+    <string name="maintain">Maintain weight</string>
+    <string name="gain">Gain weight</string>
 </resources>

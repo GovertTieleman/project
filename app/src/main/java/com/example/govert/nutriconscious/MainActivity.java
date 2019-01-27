@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         // put source
         intent.putExtra("source", "main");
+        intent.putExtra("dateOffset", 0);
 
         // startActivity
         startActivity(intent);

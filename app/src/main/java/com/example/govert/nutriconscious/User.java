@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
-    private Integer id;
+    private int id;
     private String gender;
     private int height;
     private int weight;
@@ -16,7 +16,7 @@ public class User implements Serializable {
     private String activity;
     private String goal;
 
-    public User(Integer id, String gender, int height, int weight, int age, String activity, String goal) {
+    public User(int id, String gender, int height, int weight, int age, String activity, String goal) {
         this.id = id;
         this.gender = gender;
         this.height = height;
@@ -61,11 +61,11 @@ public class User implements Serializable {
         return calories;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -120,13 +120,14 @@ public class User implements Serializable {
     public static User getUser(Cursor cursor) {
         User user;
         if (cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndex("_id"));
             String gender = cursor.getString(cursor.getColumnIndex("gender"));
             int height = cursor.getInt(cursor.getColumnIndex("height"));
             int weight = cursor.getInt(cursor.getColumnIndex("weight"));
             int age = cursor.getInt(cursor.getColumnIndex("age"));
             String activity = cursor.getString(cursor.getColumnIndex("activity"));
             String goal = cursor.getString(cursor.getColumnIndex("goal"));
-            user = new User(null, gender, height, weight, age, activity, goal);
+            user = new User(id, gender, height, weight, age, activity, goal);
 
             return user;
         }

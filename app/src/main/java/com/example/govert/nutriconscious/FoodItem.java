@@ -122,52 +122,55 @@ public class FoodItem implements Serializable {
         this.servingWeight = servingWeight;
     }
 
-    public static String makeDate() {
+    public static String makeDate(int offset) {
         // create DateFormat
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
 
         // get Date
         Calendar calendar = Calendar.getInstance();
-        String date = df.format(Calendar.getInstance(Locale.getDefault()).getTime());
+        calendar.add(Calendar.DATE, offset);
 
-        return date;
+        return df.format(calendar.getTime());
     }
 
-    public static ArrayList<FoodItem> getFoodsFromCursor(Cursor cursor) {
+    public static ArrayList<FoodItem> getFoodsFromCursor(Cursor cursor, String dateSelected) {
         // initialize ArrayList
         ArrayList<FoodItem> foodItems = new ArrayList<>();
 
         // check if a food exists
         try {
             while (cursor.moveToNext()) {
-
-                // get all the properties
-                String name = cursor.getString(cursor.getColumnIndex("item_name"));
-
-                int id = cursor.getInt(cursor.getColumnIndex("_id"));
-
+                // get date of food
                 String date = cursor.getString(cursor.getColumnIndex("date"));
 
-                Float calories = cursor.getFloat(cursor.getColumnIndex("calories"));
+                // check date
+                if (dateSelected.equals(date)) {
+                    // get all the properties
+                    String name = cursor.getString(cursor.getColumnIndex("item_name"));
 
-                Float protein = cursor.getFloat(cursor.getColumnIndex("protein"));
+                    int id = cursor.getInt(cursor.getColumnIndex("_id"));
 
-                Float carbohydrate = cursor.getFloat(cursor.getColumnIndex(
-                        "carbohydrate"));
-                Float fat = cursor.getFloat(cursor.getColumnIndex("fat"));
+                    Float calories = cursor.getFloat(cursor.getColumnIndex("calories"));
 
-                Float servingQTY = cursor.getFloat(cursor.getColumnIndex(
-                        "serving_quantity"));
+                    Float protein = cursor.getFloat(cursor.getColumnIndex("protein"));
 
-                String servingSize = cursor.getString(cursor.getColumnIndex(
-                        "serving_size"));
+                    Float carbohydrate = cursor.getFloat(cursor.getColumnIndex(
+                            "carbohydrate"));
+                    Float fat = cursor.getFloat(cursor.getColumnIndex("fat"));
 
-                Float servingWeight = cursor.getFloat(cursor.getColumnIndex(
-                        "serving_weight"));
+                    Float servingQTY = cursor.getFloat(cursor.getColumnIndex(
+                            "serving_quantity"));
 
-                // add new FoodItem to ArrayList
-                foodItems.add(new FoodItem(name, id, date, calories, protein, carbohydrate, fat,
-                        servingQTY, servingSize, servingWeight));
+                    String servingSize = cursor.getString(cursor.getColumnIndex(
+                            "serving_size"));
+
+                    Float servingWeight = cursor.getFloat(cursor.getColumnIndex(
+                            "serving_weight"));
+
+                    // add new FoodItem to ArrayList
+                    foodItems.add(new FoodItem(name, id, date, calories, protein, carbohydrate, fat,
+                            servingQTY, servingSize, servingWeight));
+                }
             }
         } finally {
             // close cursor
