@@ -120,8 +120,6 @@ public class DiaryActivity extends AppCompatActivity {
         alertDialogBuilder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
-                String
-                Date date = datePicker.getDayOfMonth()
             }
         });
 
