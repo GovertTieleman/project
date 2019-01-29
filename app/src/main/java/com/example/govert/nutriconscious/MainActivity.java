@@ -7,8 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
-    private UserDataBaseHelper db;
+
+    private static String TAG = "MainActivity";
+
+    private UserDataBaseHelper dbUser;
+    private FoodDatabaseHelper dbFood;
+    private ArrayList<FoodItem> foodItems;
     private User user;
 
     @Override
@@ -16,15 +23,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // get cursor
-        db = UserDataBaseHelper.getInstance(this);
-        Cursor cursor = db.selectUser();
+        // get cursors
+        dbUser = UserDataBaseHelper.getInstance(this);
+        Cursor cursorUser = dbUser.selectUser();
+        dbFood = FoodDatabaseHelper.getInstance(this);
+
+//        foodItems = FoodItem.getFoodsFromCursor(dbFood.selectFoods());
+//        Cursor cursorFood = dbFood.selectFoods();
+
 
         // make instance of user class using cursor
-        if (!checkForUser(cursor)) {
+        if (!checkForUser(cursorUser)) {
             startActivity(new Intent(MainActivity.this, PlanActivity.class));
             finish();
         }
+
+        // get foodItems
+
 
         // get views
         TextView caloriesTextView = findViewById(R.id.textViewCalories);

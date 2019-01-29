@@ -17,23 +17,13 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    <ProgressBar
-        android:id="@+id/progressBarCalories"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:max="2500"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewCalories"/>
-
     <TextView
         android:id="@+id/textViewMacros"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Macro nutrients:"
         android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@id/progressBarCalories"
+        app:layout_constraintTop_toBottomOf="@id/textViewCalories"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
