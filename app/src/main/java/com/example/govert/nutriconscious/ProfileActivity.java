@@ -28,6 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
     private User user;
     private ListView lv;
     private EditText et;
+    private TextView tv;
     private RadioButton rb1, rb2, rb3;
     private UserDataBaseHelper db;
 
@@ -41,6 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         // get views
         lv = (ListView) findViewById(R.id.userListView);
+        tv = (TextView) findViewById(R.id.goal);
 
         // set views
         this.setViews();
@@ -59,14 +61,23 @@ public class ProfileActivity extends AppCompatActivity {
         userInfo.add(String.format(Locale.getDefault(), "Weight_%d", user.getWeight()));
         userInfo.add(String.format(Locale.getDefault(), "Age_%d", user.getAge()));
         userInfo.add(String.format(Locale.getDefault(), "Gender_%s", user.getGender()));
-        userInfo.add(String.format(Locale.getDefault(), "Activity level_%s lifestyle", user.getActivity()));
-        userInfo.add(String.format(Locale.getDefault(), "Your weight goal_%s weight", user.getGoal()));
+        userInfo.add(String.format(Locale.getDefault(), "Activity level_%s lifestyle",
+                user.getActivity()));
+        userInfo.add(String.format(Locale.getDefault(), "Your weight goal_%s weight",
+                user.getGoal()));
 
         // make adapter
         ProfileAdapter adapter = new ProfileAdapter(this, 0, userInfo);
 
         // set adapter
         lv.setAdapter(adapter);
+
+        // get calories goal
+        Float calories = (Float) user.getCalories().floatValue();
+
+        // set goal
+        tv.setText(String.format(Locale.getDefault(), "Your daily calorie goal is: %.0f",
+                calories));
     }
 
     private class ListItemClickListener implements AdapterView.OnItemClickListener {
@@ -104,7 +115,8 @@ public class ProfileActivity extends AppCompatActivity {
             final int[] array = {0, 1, 2};
             for (final int i : array) {
                 if (i == position) {
-                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                    dialog.getWindow().setSoftInputMode(
+                            WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                 }
             }
 

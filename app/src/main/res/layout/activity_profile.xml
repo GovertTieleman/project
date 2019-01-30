@@ -28,6 +28,17 @@
         app:layout_constraintTop_toBottomOf="@id/tvHeader"
         app:layout_constraintBottom_toTopOf="@id/bottomNav"/>
 
+    <TextView
+        android:id="@+id/goal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:gravity="center_horizontal"
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"/>
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="0dp"

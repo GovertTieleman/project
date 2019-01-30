@@ -2,11 +2,20 @@ package com.example.govert.nutriconscious;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,11 +28,14 @@ public class MainActivity extends AppCompatActivity {
 
     private HashMap<String, ArrayList<FoodItem>> foodItems;
     private User user;
-    private Float totalKCal;
+    private Float totalKCal, carbs, fats, proteins;
     private ArrayList<String> daysOfWeek;
     private DateFormat df;
     private TextView tvTotalKCal, tvAvgKCal, tvWeek;
     private int weekOffset;
+    private String[] pieChartFields = {"Carbohydrates", "Fats", "Proteins"};
+    private Float[] macroPercentages;
+    private PieChart pieChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +46,19 @@ public class MainActivity extends AppCompatActivity {
         tvTotalKCal = findViewById(R.id.caloriesTotal);
         tvAvgKCal = findViewById(R.id.caloriesAverage);
         tvWeek = findViewById(R.id.tvWeek);
+        pieChart = findViewById(R.id.pieChart);
+
+        // setup pieChart for use
+        Description description = new Description();
+        description.setEnabled(false);
+        pieChart.setDescription(description);
+        pieChart.setUsePercentValues(true);
+        pieChart.setHoleRadius(50f);
+        pieChart.setTransparentCircleAlpha(0);
+        pieChart.setCenterText("Macro nutrient ratio");
+        pieChart.setCenterTextSize(12);
+        pieChart.setDrawEntryLabels(true);
+        pieChart.setEntryLabelTextSize(20);
 
         // get user
         UserDataBaseHelper dbUser = UserDataBaseHelper.getInstance(this);
@@ -71,19 +96,84 @@ public class MainActivity extends AppCompatActivity {
             foodItems.put(date, FoodItem.getFoodsFromCursor(cursor, date));
         }
 
-        // get total KCal
+        // reset total KCal, carbs and proteins
         totalKCal = 0f;
+        carbs = 0f;
+        fats = 0f;
+        proteins = 0f;
+
+        // get total KCal, carbs and proteins
         for (String date  : daysOfWeek) {
             ArrayList<FoodItem> foodsForDay = foodItems.get(date);
-            for (FoodItem foodItem : foodsForDay) {
-                totalKCal += (foodItem.getCalories() * foodItem.getServingQTY());
+            try {
+                for (FoodItem foodItem : foodsForDay) {
+                    totalKCal += (foodItem.getCalories() * foodItem.getServingQTY());
+                    carbs += (foodItem.getCarbohydrate() * foodItem.getServingQTY());
+                    fats += (foodItem.getFat() * foodItem.getServingQTY());
+                    proteins += (foodItem.getProtein() * foodItem.getServingQTY());
+                }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
         }
+
+        // get percentages of carbs, fats and proteins
+        macroPercentages = getMacroPercentages();
 
         // set views
         tvWeek.setText(String.format(Locale.getDefault(), "Week of %s", daysOfWeek.get(0)));
         tvTotalKCal.setText(String.format(Locale.getDefault(), "Total calories this week: %.0f / %.0f", totalKCal, (user.getCalories()*7)));
         tvAvgKCal.setText(String.format(Locale.getDefault(), "Average calories per day: %.0f / %.0f", (totalKCal / 7), user.getCalories()));
+
+        // add data to chart
+        addDataSet();
+    }
+
+    private void addDataSet() {
+        ArrayList<PieEntry> yEntrys = new ArrayList<>();
+        ArrayList<String> xEntrys = new ArrayList<>();
+
+        for(int i = 0; i < macroPercentages.length; i++) {
+            yEntrys.add(new PieEntry(macroPercentages[i], i));
+        }
+
+        for(int i = 0; i < pieChartFields.length; i++) {
+            xEntrys.add(pieChartFields[i]);
+        }
+
+        // create dataSet
+        PieDataSet pieDataSet = new PieDataSet(yEntrys, "Macro Percentages");
+        pieDataSet.setSliceSpace(2);
+        pieDataSet.setValueTextSize(12);
+
+        // add colors
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(Color.RED);
+        colors.add(Color.YELLOW);
+        colors.add(Color.BLUE);
+
+        pieDataSet.setColors(colors);
+
+        // remove legend
+        Legend legend = pieChart.getLegend();
+        legend.setEnabled(false);
+
+        // create pie
+        PieData pieData = new PieData(pieDataSet);
+        pieChart.setData(pieData);
+        pieChart.invalidate();
+    }
+
+    private Float[] getMacroPercentages() {
+        // get total
+        Float totalMacros = carbs + fats + proteins;
+
+        // get percentages
+        Float carbsPCNT = carbs * totalMacros * 100;
+        Float fatsPCNT = fats * totalMacros * 100;
+        Float protPCNT = proteins * totalMacros * 100;
+
+        return new Float[]{carbsPCNT, fatsPCNT, protPCNT};
     }
 
     private ArrayList<String> getDaysOfWeek() {
