@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class DetailActivity extends AppCompatActivity implements DetailRequest.Callback {
@@ -21,8 +23,9 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
     private FoodItemSimple selectedFood;
     private ListView lv;
     private Float numberOfServings;
-    private String source, date;
+    private String source, dateString;
     private int offset;
+    private Date date;
 
 
     @Override
@@ -40,7 +43,8 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
         // get source
         source = getIntent().getStringExtra("source");
         offset = getIntent().getIntExtra("dateOffset", 0);
-        date = FoodItem.makeDate(offset);
+        date = (Date) getIntent().getSerializableExtra("date");
+        dateString = FoodItem.makeDate(offset);
 
         // get FoodItemSimple if source = search
         if (source.equals("search")) {
@@ -147,7 +151,7 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
     }
 
     public void fabClicked(View view) {
-        detailedFood.setDate(date);
+        detailedFood.setDate(dateString);
 
         // set number of servings for detailedFood
         detailedFood.setServingQTY(numberOfServings);
@@ -166,6 +170,7 @@ public class DetailActivity extends AppCompatActivity implements DetailRequest.C
         // make intent
         Intent intent = new Intent(this, DiaryActivity.class);
         intent.putExtra("dateOffset", offset);
+        intent.putExtra("date", date);
 
         // return to diary
         startActivity(intent);

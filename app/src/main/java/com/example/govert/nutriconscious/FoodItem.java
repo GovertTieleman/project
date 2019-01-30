@@ -145,6 +145,7 @@ public class FoodItem implements Serializable {
 
                 // check date
                 if (dateSelected.equals(date)) {
+
                     // get all the properties
                     String name = cursor.getString(cursor.getColumnIndex("item_name"));
 
@@ -172,7 +173,8 @@ public class FoodItem implements Serializable {
                             servingQTY, servingSize, servingWeight));
                 }
             }
-        } finally {
+        }
+        finally {
             // close cursor
             cursor.close();
         }

@@ -15,10 +15,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -26,12 +27,15 @@ import static com.example.govert.nutriconscious.FoodItem.getFoodsFromCursor;
 import static com.example.govert.nutriconscious.FoodItem.makeDate;
 
 public class DiaryActivity extends AppCompatActivity {
+
     private TextView tvDate, caloriesLeft;
     private ListView lv;
     private FoodDatabaseHelper dbFood;
     private ArrayList<FoodItem> foodItems;
     private User user;
     private int dateOffset;
+    private Date date;
+    private DateFormat df;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +52,32 @@ public class DiaryActivity extends AppCompatActivity {
         Cursor cursorUser = dbUser.selectUser();
         user = User.getUser(cursorUser);
 
-        // set offset
+        // create DateFormat
+        df = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+
+        // make dateString
+        String dateString;
+
+        // get dateOffset
         dateOffset = getIntent().getIntExtra("dateOffset", 0);
 
+        // get date from intent or calendar
+        try {
+            date = (Date) getIntent().getSerializableExtra("date");
+            dateString = df.format(date);
+        }
+        catch (Exception e) {
+            date = Calendar.getInstance().getTime();
+            dateString = df.format(date);
+        }
+
+        Log.d("dateisnow", dateString);
+
         // set views
-        setViews();
+        setViews(dateString);
     }
 
-    private void setViews() {
-        // get date
-        String dateSelected = makeDate(dateOffset);
-
+    private void setViews(String dateString) {
         // set tvDate
         switch (dateOffset) {
             case 0:
@@ -71,7 +90,7 @@ public class DiaryActivity extends AppCompatActivity {
                 tvDate.setText("Yesterday");
                 break;
             default:
-                tvDate.setText(dateSelected);
+                tvDate.setText(dateString);
                 break;
         }
 
@@ -80,7 +99,7 @@ public class DiaryActivity extends AppCompatActivity {
 
         // get foodItems
         Cursor cursorFood = dbFood.selectFoods();
-        foodItems = getFoodsFromCursor(cursorFood, dateSelected);
+        foodItems = getFoodsFromCursor(cursorFood, dateString);
 
         // get adapter
         DiaryAdapter adapter = new DiaryAdapter(this, 0, foodItems);
@@ -112,17 +131,41 @@ public class DiaryActivity extends AppCompatActivity {
         LayoutInflater inflater = DiaryActivity.this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.date_picker, null);
 
+        // get DatePicker
         final DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.datePicker);
 
+        // set View
         alertDialogBuilder.setView(dialogView);
 
         // create options
         alertDialogBuilder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
+                // make calendar
+                Calendar calendar = Calendar.getInstance();
+
+                // get currentDate
+                Date currentDate = calendar.getTime();
+
+                // set calendar and update datePicker
+                calendar.set(datePicker.getYear(), datePicker.getMonth(),
+                        datePicker.getDayOfMonth());
+
+                // get date
+                date = calendar.getTime();
+
+                // calculate new dateOffset
+                if (date.after(currentDate)) {
+                    dateOffset = (int) ((date.getTime() - currentDate.getTime()) / 86400000);
+                }
+                else {
+                    dateOffset = (int) - ((currentDate.getTime() - date.getTime()) / 86400000);
+                }
+
+                // set Views
+                setViews(df.format(date));
             }
         });
-
         alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -152,8 +195,9 @@ public class DiaryActivity extends AppCompatActivity {
             intent.putExtra("foodItem", foodSelected);
             intent.putExtra("source", "diary");
             intent.putExtra("dateOffset", dateOffset);
+            intent.putExtra("date", date);
 
-            // start MenuActivity with intent
+            // start DetailActivity with intent
             startActivity(intent);
             finish();
         }
@@ -166,6 +210,7 @@ public class DiaryActivity extends AppCompatActivity {
         // put source
         intent.putExtra("source", "diary");
         intent.putExtra("dateOffset", dateOffset);
+        intent.putExtra("date", date);
 
         // startActivity
         startActivity(intent);
@@ -182,7 +227,7 @@ public class DiaryActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
                 dbFood.deleteFood(id);
-                setViews();
+                setViews(makeDate(dateOffset));
                 Toast.makeText(DiaryActivity.this, "Deleted", Toast.LENGTH_LONG).show();
             }
         });
@@ -199,13 +244,27 @@ public class DiaryActivity extends AppCompatActivity {
     }
 
     public void nextClicked(View view) {
+        // update dateOffset
         dateOffset += 1;
-        setViews();
+
+        // update Date
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, dateOffset);
+        date = calendar.getTime();
+
+        setViews(makeDate(dateOffset));
     }
 
     public void previousClicked(View view) {
+        // update dateOffset
         dateOffset -= 1;
-        setViews();
+
+        // get Date
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, dateOffset);
+        date = calendar.getTime();
+
+        setViews(makeDate(dateOffset));
     }
 
     @Override

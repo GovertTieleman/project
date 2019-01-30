@@ -7,19 +7,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SearchActivity extends AppCompatActivity implements SearchRequest.Callback {
     private ListView lv;
     private TextView tv;
     private ArrayList<FoodItemSimple> foodsFound;
     private int offset;
+    private Date date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,9 @@ public class SearchActivity extends AppCompatActivity implements SearchRequest.C
         // set listener
         lv.setOnItemClickListener(new ListItemClickListener());
 
+        // get offset and date
         offset = getIntent().getIntExtra("dateOffset", 0);
+        date = (Date) getIntent().getSerializableExtra("date");
     }
 
     private class ListItemClickListener implements AdapterView.OnItemClickListener {
@@ -46,6 +48,7 @@ public class SearchActivity extends AppCompatActivity implements SearchRequest.C
             intent.putExtra("foodItem", foodSelected);
             intent.putExtra("source", "search");
             intent.putExtra("dateOffset", offset);
+            intent.putExtra("date", date);
 
             // start MenuActivity with intent
             startActivity(intent);
