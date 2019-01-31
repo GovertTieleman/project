@@ -19,7 +19,7 @@ The FAB sends users to SearchActvity, where they can enter foods into the diary.
 Using the hacker version of the Nutritionix API, SearchActivity sends JSON requests based on a user’s search query. The results are then displayed in a ListView, showing some details about the foods. When clicked, more details are shown in DetailActivity.
 ### DetailActivity
 Here, users can see details about the food that they clicked on, and they can change the amount of it that they want to add to their diary. The FAB works as a confirm button and sends users back to either Diary or Main, depending on where it was from that they accessed Search.
-## A more detailed look
+## A closer look
 ### Classes
 There are 4 classes: 
 
