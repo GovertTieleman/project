@@ -1,8 +1,8 @@
-NutriConscious
+# NutriConscious
 
 This app allows users to keep track of their calorie intake throughout their day, by logging the foods they eat.
 {SS}
-Overview of app
+## Overview of app
 MainActivity
 This is the app’s homescreen. Here, users can see statistics about their calorie intake across the span of a week. They can see the total calories they had in the week, their daily average and also a pie chart with the ratio of macro nutrients they consumed. The week that is displayed can be changed to the previous or next week. Users can also quickly add foods to their diary by clicking on the floating action button (FAB). Foods added in the main screen will always be added to the current date in the diary. 
 At the bottom there is a navigation bar with 3 buttons, this bar is present in MainActivity, ProfileActivity and DiaryActivity. It allows users to easily switch between these 3 activities.
