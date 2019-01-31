@@ -36,3 +36,21 @@ finally implemented the food Database where users can now save their foods
 
 # day 12
 various UI improvements, navigation fixed with no trailing activities and proper back button functionality. implemented ProfileActivity where users can update their info and goals. Improved signup process to be less overwhelming and more intuitive.
+
+# day 13
+started work on dates and scrolling through them in diary
+
+# day 14
+finished date functionality, started working on dialog screens.
+
+# day 15
+implemented piechart and week scrolling
+
+# day 16
+general organization of code etc.
+
+# day 17
+final touches
+
+# day 18
+wrote report and made video
