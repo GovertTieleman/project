@@ -22,18 +22,18 @@ Here, users can see details about the food that they clicked on, and they can ch
 ## A more detailed look
 ### Classes
 There are 4 classes: 
-1,	User
+1	User
 
 Used to keep track of user data, sends and receives user objects to and from the user database.
 There is a method to calculate the daily calories the user should eat, based on their information, as well as a method to create the user object by passing a cursor.
-2.	FoodItem 
+2	FoodItem 
 
 Can hold all the detailed information about a food, including its database id (for updating and deleting foods). 
 There is a function to make a date string and a function to create an instance of the object by passing a cursor.
-3.	FoodItemSimple
+3	FoodItemSimple
 
 Simpler version of FoodItem, used in SearchActivity. Aside from some basic nutritional information, also includes the food’s API id. This can be used to get the food’s details when the class instance is passed to DetailActivity.
-4.	Nutrient
+4	Nutrient
 
 This class is used in order to fill the nutrient ListView inside DetailActivity. 
 ### Databases
@@ -56,16 +56,19 @@ Aside from this, the app mainly uses FABs with onclick methods and list items wi
 setViews is a method that is used in multiple activities. Usually called after a user action, such as changing the date in their diary, or updating the information in their profile, this function simply updates the relevant views inside the activity. This method is also called when receiving data from a JSONrequest.
 ### MainActivity
 Aside from the more general functions that have been discussed above, MainActivity contains the following functions:
-1.	checkForUser
+1	checkForUser
 
 called in onCreate and returns true if a user exists and false if not. Constructs the user instance if it does exist. If no user exists, the false boolean will send the user to PlanActivity.
-2.	getDaysOfWeek
+
+2	getDaysOfWeek
 
 Returns and ArrayList of date strings, Monday through Sunday for the week that the user wants to see. 
-3. getMacroPercentages
+
+3 getMacroPercentages
 
 Returns a list of floats with the percentage of each macro nutrient in the current week. 
-4.	addDataSet
+
+4	addDataSet
 
 Method used to add data to the pie chart.
 ### DiaryActivity
