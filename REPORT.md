@@ -5,13 +5,15 @@ This app allows users to keep track of their calorie intake throughout their day
 ## Overview of app
 ### MainActivity
 This is the app’s homescreen. Here, users can see statistics about their calorie intake across the span of a week. They can see the total calories they had in the week, their daily average and also a pie chart with the ratio of macro nutrients they consumed. The week that is displayed can be changed to the previous or next week. Users can also quickly add foods to their diary by clicking on the floating action button (FAB). Foods added in the main screen will always be added to the current date in the diary. 
+
 At the bottom there is a navigation bar with 3 buttons, this bar is present in MainActivity, ProfileActivity and DiaryActivity. It allows users to easily switch between these 3 activities.
 ### PlanActivity
 This is where users end up when they first install the app. If no user exists in the database, MainActivity will send users here to enter their information. In order to prevent overwhelming users, they are asked to enter their information in easy steps. If they make a mistake or want to go back and change something they entered, they can do so. Once finished, the user will be sent to MainActivity where they can start using the app.
 ### ProfileActivity
 Here, users can adjust the information they entered, should they want to. The activity makes uses of custom dialog boxes to update information in a very user-friendly way. At the bottom, their daily calorie goal is displayed based on their information.
 ### DiaryActivity
-In this activity users will see a list of the foods they consumed for the selected date, by default this will be today. They can see the amount of calories they have left on the day and are able to scroll through dates or pick a date from the date picker at the top. 
+In this activity users will see a list of the foods they consumed for the selected date, by default this will be today. They can see the amount of calories they have left on the day and are able to scroll through dates or pick a date from the date picker at the top.
+
 The FAB sends users to SearchActvity, where they can enter foods into the diary. Foods added through this FAB are added to the current date displayed on the screen. Foods can be clicked or long clicked. This allows users to see and adjust foods details or delete foods, respectively.
 ### SearchActivity
 Using the hacker version of the Nutritionix API, SearchActivity sends JSON requests based on a user’s search query. The results are then displayed in a ListView, showing some details about the foods. When clicked, more details are shown in DetailActivity.
