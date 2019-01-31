@@ -9,6 +9,8 @@ This app aims to make it easy for users to keep track of their daily nutrient in
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/Qru4eag2TOA/0.jpg)](https://www.youtube.com/watch?v=Qru4eag2TOA)
 
+## here are some screenshots showcasing the app
+
 ![Alt text](/Home.jpg?raw=true "Portrait")
 ![Alt text](/Diary.jpg?raw=true "Portrait")
 ![Alt text](/Profile.jpg?raw=true "Portrait")
